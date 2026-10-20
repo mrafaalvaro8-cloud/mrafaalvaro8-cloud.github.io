@@ -6,6 +6,10 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Repo user-site (mrafaalvaro8-cloud.github.io) disajikan dari akar domain,
+  // jadi base harus '/'. Untuk repo project-site, ganti dengan '/nama-repo/'.
+  base: '/',
+
   plugins: [
     react(),
     tailwindcss(),

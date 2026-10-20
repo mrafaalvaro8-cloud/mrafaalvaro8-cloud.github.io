@@ -1,0 +1,67 @@
+# Deploy otomatis ke GitHub Pages.
+# Dipilih jalur GitHub Actions (bukan branch) karena hasil build (dist/)
+# di-.gitignore — jadi artefak di-upload sebagai artifact, bukan commit.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Token minimal: cukup baca repo, tulis ke Pages, buat ID token untuk OIDC.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Satu deploy per-push; jangan batalkan yang sedang berjalan agar
+# deployment tidak pernah gagal di tengah jalan.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Quality gate sesuai AGENTS.md §3 — CI gagal jika ada error.
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
