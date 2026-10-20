@@ -1,0 +1,27 @@
+/*
+ * Token desain (AGENTS.md §5). Warna sains bersifat TETAP di seluruh situs:
+ * O₂ biru, CO₂ kuning, darah kaya O₂ merah terang, darah miskin O₂ merah gelap.
+ * Jangan mengubah makna warna antar halaman.
+ */
+
+:root {
+  /* Mode gelap = default immersif */
+  --bg-deep: #0a1020;
+  --tissue: #e0566b;
+  --oxygen: #4fd1ff;
+  --co2: #f2b84b;
+  --mucus: #7ce0a5;
+  --ink: #eaf2ff;
+  --ink-dim: #9fb3d1;
+}
+
+/* Mode terang untuk ruang kelas bercahaya terang (§5) */
+[data-theme='light'] {
+  --bg-deep: #f2f6fd;
+  --tissue: #c23b50;
+  --oxygen: #0b7ea8;
+  --co2: #9a6a10;
+  --mucus: #1f7a4d;
+  --ink: #0a1020;
+  --ink-dim: #45536b;
+}

@@ -1,0 +1,195 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* TODO(fase-3): host font sendiri (subset Latin, mis. Nunito) agar offline penuh (§5). */
+:root {
+  /* Kontrol form & scrollbar ikut tema gelap sejak paint pertama (Chrome Android) */
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+}
+
+html {
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  /* Chrome Android memperbesar/mengecilkan teks otomatis (terutama di landscape)
+     sehingga lebar viewport tidak lagi 360px — kunci ukuran teks (§5 mobile-first) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Geser-ke-bawah terus di tengah simulasi = refresh halaman tak sengaja dan
+     progres stasiun hilang. Hanya sumbu-Y dikotak; sumbu-X dibiarkan agar
+     gestur "kembali" dari tepi layar Chrome Android tetap berfungsi (§10). */
+  overscroll-behavior-y: none;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-deep);
+  color: var(--ink);
+  /* Ukuran isi minimal 16px, panjang baris < 70 karakter (§5) */
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* Cangkang halaman: ruang aman untuk notch/cutout Android 15+ edge-to-edge.
+   viewport-fit=cover di index.html membuat inset benar-benar terisi (§9). */
+.app-shell {
+  padding: clamp(1rem, 4vw, 3rem);
+  padding-left: max(clamp(1rem, 4vw, 3rem), env(safe-area-inset-left));
+  padding-right: max(clamp(1rem, 4vw, 3rem), env(safe-area-inset-right));
+  padding-bottom: max(clamp(1rem, 4vw, 3rem), env(safe-area-inset-bottom));
+  min-height: 100vh;
+}
+
+@supports (min-height: 100dvh) {
+  /* 100dvh mengikuti URL bar Chrome Android yang menyusut saat menggulir,
+     100vh tidak (tinggi "permanen") → cegah latar terpotong/ganda (§5). */
+  .app-shell {
+    min-height: 100dvh;
+  }
+}
+
+/* ——— Lapisan sentuh Android ———
+   Semua kontrol interaktif: hilangkan penundaan 300ms dan zoom ganda-ketuk
+   saat tombol/tombol lengket ditekan (Chrome Android, §5 mobile-first). */
+button,
+a,
+input,
+select,
+textarea,
+summary,
+label[for],
+[role='button'],
+[role='tab'],
+[role='option'],
+[role='switch'],
+[role='radio'],
+[role='link'] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Umpan balik ketuk (pengganti sorotan tap yang dimatikan di atas):
+   hanya untuk layar sentuh, tombol tetap tenang di desktop (§5). */
+@media (pointer: coarse) {
+  button:not(:disabled):active,
+  a:active,
+  [role='button']:active {
+    filter: brightness(1.3);
+  }
+}
+
+/* Area permainan/simulasi: ketuk-seret tak boleh memilih teks atau memunculkan
+   menu konteks panjang-di-tekan di Chrome Android. Dipakai lewat class .interaktif */
+.interaktif {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  /* Field <16px memaksa Chrome Android memperbesar halaman saat menerima fokus
+     (auto-zoom) → selalu mulai dari 16px (WCAG 1.4.4, §9). */
+  font-size: 16px;
+}
+
+/* Slider: area sentuh 44px, jempol besar, warna mengikuti token sains.
+   `pan-y`: geser mendatar = mengatur nilai, geser vertikal = menggulir halaman
+   (tanpa membatalkan drag slider di tengah jalan). */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 44px;
+  background: transparent;
+  touch-action: pan-y;
+  cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  margin-top: -9px;
+  border-radius: 50%;
+  background: var(--oxygen);
+  border: 3px solid var(--bg-deep);
+  box-shadow: 0 0 0 2px rgba(79, 209, 255, 0.5);
+}
+
+input[type='range']::-moz-range-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border: 3px solid var(--bg-deep);
+  border-radius: 50%;
+  background: var(--oxygen);
+  box-shadow: 0 0 0 2px rgba(79, 209, 255, 0.5);
+}
+
+/* Navigasi tab di zona jempol (bawah layar) — hanya layar kecil.
+   Di desktop tetap mengalir normal di atas (§5 mobile-first). */
+@media (max-width: 767px) {
+  .tabbar-android {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    background: var(--bg-deep);
+    background: color-mix(in srgb, var(--bg-deep) 94%, transparent);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Tab bar keluar dari alur dokumen (fixed) → beri ruang di bawah konten
+     agar stasiun terakhir tak tertutup bar navigasi. */
+  .app-shell {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* Hormati preferensi kurangi gerak (§9) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fokus terlihat untuk navigasi keyboard (WCAG 2.2 AA, §9) */
+:focus-visible {
+  outline: 3px solid var(--oxygen);
+  outline-offset: 2px;
+}
