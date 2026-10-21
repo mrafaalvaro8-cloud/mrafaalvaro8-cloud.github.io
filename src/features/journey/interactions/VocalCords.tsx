@@ -30,6 +30,9 @@ export function VocalCords() {
   const [swallowing, setSwallowing] = useState(false)
   const [getar, setGetar] = useState(0)
   const suaraRef = useRef<HTMLAudioElement | null>(null)
+  // Salinan nilai slider untuk listener 'canplay' (hindari state basi).
+  const getarRef = useRef(0)
+  getarRef.current = getar
 
   // Suara mengikuti posisi slider: makin jauh digeser, makin besar volume.
   // Versi lama hanya bunyi tepat di 100% — di HP (Android) jempol sering
@@ -57,7 +60,23 @@ export function VocalCords() {
   // Mulai unduh file suara saat jari/mouse menyentuh slider, supaya di HP
   // tidak ada jeda unduh saat mulai digeser.
   const siapkanSuara = () => {
-    ensureAudio(suaraRef)
+    const audio = ensureAudio(suaraRef)
+    // Jika jari sudah menggeser sebelum unduhan selesai, kanplay otomatis
+    // begitu file siap — cegah "tidak ada suara" saat geser cepat di HP.
+    if (audio.readyState < 3 && audio.dataset.antrePlay !== 'ya') {
+      audio.dataset.antrePlay = 'ya'
+      audio.addEventListener(
+        'canplay',
+        () => {
+          delete audio.dataset.antrePlay
+          if (getarRef.current > 0 && audio.paused) {
+            audio.volume = getarRef.current / 100
+            void audio.play().catch(() => {})
+          }
+        },
+        { once: true },
+      )
+    }
   }
 
   // Hentikan suara saat stasiun tidak lagi dipakai (cleanup unmount, §11).
