@@ -68,7 +68,7 @@ export const id = {
       vocalCords: {
         judul: 'Epiglotis dan pita suara',
         petunjuk:
-          'Tekan "Telan" untuk melihat epiglotis menutup, lalu geser kontrol untuk menggetarkan pita suara. Coba geser sampai penuh!',
+          'Tekan "Telan" untuk melihat epiglotis menutup, lalu geser kontrol pita suara — semakin jauh digeser, semakin besar suaranya.',
         telan: 'Telan',
         statusTutup: 'Epiglotis menutup — makanan aman ke kerongkongan.',
         statusBuka: 'Epiglotis terbuka — jalan napas lancar.',

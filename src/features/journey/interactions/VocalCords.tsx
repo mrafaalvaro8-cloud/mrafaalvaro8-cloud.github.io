@@ -1,16 +1,29 @@
 import { useEffect, useRef, useState } from 'react'
+import type { MutableRefObject } from 'react'
 import { id } from '../../../content/i18n/id'
 
 /**
  * Stasiun Faring & Laring — epiglotis menutup saat menelan, pita suara
  * bergetar saat bersuara (KS M1 huruf a). Tanpa mikrofon di versi awal
  * (mikrofon = M3); getaran dikontrol slider.
- * Saat slider penuh (100%) diputar file suara milik pemilik proyek
- * (public/audio/epiglotis-penuh.mp3, dibuat dengan Voicemod).
+ * Saat slider digeser, file suara milik pemilik proyek diputar dengan
+ * volume mengikuti posisi slider (public/audio/epiglotis-penuh.mp3,
+ * dibuat dengan Voicemod).
  */
 
 const CORD_BASE_Y = 96
 const SUARA_PENUH = 'audio/epiglotis-penuh.mp3'
+
+/** Buat elemen audio sekali saja lalu pakai ulang (ref). */
+function ensureAudio(ref: MutableRefObject<HTMLAudioElement | null>) {
+  if (!ref.current) {
+    const audio = new Audio(`${import.meta.env.BASE_URL}${SUARA_PENUH}`)
+    audio.preload = 'auto'
+    audio.volume = 0
+    ref.current = audio
+  }
+  return ref.current
+}
 
 export function VocalCords() {
   const t = id.journey.interaksi.vocalCords
@@ -18,11 +31,13 @@ export function VocalCords() {
   const [getar, setGetar] = useState(0)
   const suaraRef = useRef<HTMLAudioElement | null>(null)
 
-  // Putar suara hanya saat slider menyentuh penuh; geser turun = berhenti.
-  // Slider adalah interaksi pengguna, jadi izin autoplay browser terpenuhi.
-  // Bila browser memblokir, fitur lain tetap jalan (fallback diam, §10).
+  // Suara mengikuti posisi slider: makin jauh digeser, makin besar volume.
+  // Versi lama hanya bunyi tepat di 100% — di HP (Android) jempol sering
+  // berhenti di 99%, jadi terdengar "tidak ada suara". Slider adalah
+  // interaksi pengguna, jadi izin autoplay browser terpenuhi. Jika tetap
+  // diblokir, fitur lain jalan normal (fallback diam, §10).
   useEffect(() => {
-    if (getar < 100) {
+    if (getar <= 0) {
       const audio = suaraRef.current
       if (audio && !audio.paused) {
         audio.pause()
@@ -30,17 +45,20 @@ export function VocalCords() {
       }
       return
     }
-    if (!suaraRef.current) {
-      const audio = new Audio(`${import.meta.env.BASE_URL}${SUARA_PENUH}`)
-      audio.volume = 0.5 // volume rendah default (M7)
-      suaraRef.current = audio
+    const audio = ensureAudio(suaraRef)
+    audio.volume = getar / 100
+    if (audio.paused) {
+      void audio.play().catch(() => {
+        /* diblokir autoplay/codec — abaikan, slider tetap berfungsi */
+      })
     }
-    const audio = suaraRef.current
-    audio.currentTime = 0
-    void audio.play().catch(() => {
-      /* diblokir autoplay/codec — abaikan, slider tetap berfungsi */
-    })
   }, [getar])
+
+  // Mulai unduh file suara saat jari/mouse menyentuh slider, supaya di HP
+  // tidak ada jeda unduh saat mulai digeser.
+  const siapkanSuara = () => {
+    ensureAudio(suaraRef)
+  }
 
   // Hentikan suara saat stasiun tidak lagi dipakai (cleanup unmount, §11).
   useEffect(
@@ -152,6 +170,8 @@ export function VocalCords() {
           max="100"
           step="1"
           value={getar}
+          onPointerDown={siapkanSuara}
+          onTouchStart={siapkanSuara}
           onChange={(e) => setGetar(Number(e.target.value))}
           className="h-11 w-full accent-[var(--tissue)]"
         />
