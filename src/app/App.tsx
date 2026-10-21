@@ -2,8 +2,17 @@ import { lazy, Suspense, useEffect, useState } from 'react'
 import { id } from '../content/i18n/id'
 
 // Satu fitur = satu folder = bisa dimuat lazy (AGENTS.md §4).
-const JourneyPage = lazy(() => import('../features/journey/JourneyPage'))
-const DiaphragmSim = lazy(() => import('../features/diaphragm/DiaphragmSim'))
+// Import berupa literal statis agar Vite yakin memecah bundelnya.
+const JourneyPage = lazy(() =>
+  import('../features/journey/JourneyPage').then((m) => ({
+    default: m.JourneyPage,
+  })),
+)
+const DiaphragmSim = lazy(() =>
+  import('../features/diaphragm/DiaphragmSim').then((m) => ({
+    default: m.DiaphragmSim,
+  })),
+)
 
 type Tab = 'journey' | 'diaphragm'
 
@@ -47,7 +56,10 @@ export function App() {
   }
 
   return (
-    <main className="app-shell flex flex-col items-center gap-4">
+    <main
+      data-testid="app-root"
+      className="app-shell flex flex-col items-center gap-4"
+    >
       <header className="flex w-full max-w-6xl flex-col items-start gap-2 text-center">
         <h1
           className="text-4xl font-bold tracking-tight"
