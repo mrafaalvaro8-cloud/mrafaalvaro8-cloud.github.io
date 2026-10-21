@@ -1,18 +1,55 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { id } from '../../../content/i18n/id'
 
 /**
  * Stasiun Faring & Laring — epiglotis menutup saat menelan, pita suara
  * bergetar saat bersuara (KS M1 huruf a). Tanpa mikrofon di versi awal
  * (mikrofon = M3); getaran dikontrol slider.
+ * Saat slider penuh (100%) diputar file suara milik pemilik proyek
+ * (public/audio/epiglotis-penuh.mp3, dibuat dengan Voicemod).
  */
 
 const CORD_BASE_Y = 96
+const SUARA_PENUH = 'audio/epiglotis-penuh.mp3'
 
 export function VocalCords() {
   const t = id.journey.interaksi.vocalCords
   const [swallowing, setSwallowing] = useState(false)
   const [getar, setGetar] = useState(0)
+  const suaraRef = useRef<HTMLAudioElement | null>(null)
+
+  // Putar suara hanya saat slider menyentuh penuh; geser turun = berhenti.
+  // Slider adalah interaksi pengguna, jadi izin autoplay browser terpenuhi.
+  // Bila browser memblokir, fitur lain tetap jalan (fallback diam, §10).
+  useEffect(() => {
+    if (getar < 100) {
+      const audio = suaraRef.current
+      if (audio && !audio.paused) {
+        audio.pause()
+        audio.currentTime = 0
+      }
+      return
+    }
+    if (!suaraRef.current) {
+      const audio = new Audio(`${import.meta.env.BASE_URL}${SUARA_PENUH}`)
+      audio.volume = 0.5 // volume rendah default (M7)
+      suaraRef.current = audio
+    }
+    const audio = suaraRef.current
+    audio.currentTime = 0
+    void audio.play().catch(() => {
+      /* diblokir autoplay/codec — abaikan, slider tetap berfungsi */
+    })
+  }, [getar])
+
+  // Hentikan suara saat stasiun tidak lagi dipakai (cleanup unmount, §11).
+  useEffect(
+    () => () => {
+      suaraRef.current?.pause()
+      suaraRef.current = null
+    },
+    [],
+  )
 
   const vibrating = getar > 30
   const amp = getar / 100
@@ -119,7 +156,7 @@ export function VocalCords() {
           className="h-11 w-full accent-[var(--tissue)]"
         />
         <p className="text-xs" style={{ color: 'var(--ink-dim)' }} role="status">
-          {vibrating ? t.getarHidup : t.getarMati}
+          {getar >= 100 ? t.getarPenuh : vibrating ? t.getarHidup : t.getarMati}
         </p>
       </div>
     </div>

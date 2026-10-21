@@ -68,13 +68,14 @@ export const id = {
       vocalCords: {
         judul: 'Epiglotis dan pita suara',
         petunjuk:
-          'Tekan "Telan" untuk melihat epiglotis menutup, lalu geser kontrol untuk menggetarkan pita suara.',
+          'Tekan "Telan" untuk melihat epiglotis menutup, lalu geser kontrol untuk menggetarkan pita suara. Coba geser sampai penuh!',
         telan: 'Telan',
         statusTutup: 'Epiglotis menutup — makanan aman ke kerongkongan.',
         statusBuka: 'Epiglotis terbuka — jalan napas lancar.',
         getar: 'Getaran pita suara',
         getarMati: 'Pita suara diam.',
         getarHidup: 'Pita suara bergetar — suara sedang dibuat.',
+        getarPenuh: 'Slider penuh — getaran maksimal, suara khas terdengar!',
       },
       cilia: {
         judul: 'Sapuan silia dan efek asap',
