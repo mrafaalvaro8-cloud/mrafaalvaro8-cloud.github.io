@@ -5,7 +5,9 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist', 'dev-dist'] },
+  // .claude/worktrees berisi salinan proyek (sesi lain) yang membingungkan
+  // parser typescript-eslint (tsconfig ganda) — jangan ikut dilint.
+  { ignores: ['dist', 'dev-dist', '.claude'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],

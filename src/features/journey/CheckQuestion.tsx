@@ -6,13 +6,14 @@ import type { Question } from '../../engine/types'
 /**
  * Cek pemahaman per stasiun (KS M1 huruf c). MCQ: umpan balik + penjelasan
  * selalu muncul setelah menjawab — tanpa hukuman, tanpa "game over" (§8).
- * Jawaban & penguasaan dicatat lokal lewat store progress.
+ * Jawaban & penguasaan dicatat lokal lewat store progress (IndexedDB), jadi
+ * halaman dimuat ulang pun jawaban pertama tetap terkunci (§8).
  */
 export function CheckQuestion({ question }: { question: Question }) {
   const t = id.journey.cek
   const recordAnswer = useProgressStore((s) => s.recordAnswer)
-  const alreadyAnswered = useProgressStore((s) => s.answers[question.id])
-  const [choice, setChoice] = useState<string | null>(null)
+  const storedChoice = useProgressStore((s) => s.answers[question.id])
+  const [choice, setChoice] = useState<string | null>(storedChoice ?? null)
 
   const answered = choice !== null
   const correct = answered && choice === question.answer
@@ -21,10 +22,14 @@ export function CheckQuestion({ question }: { question: Question }) {
   const answer = (optionId: string) => {
     if (answered) return
     setChoice(optionId)
-    const isCorrect = optionId === question.answer
     // Catat hanya sekali per soal — jawaban pertama yang menentukan (§8).
-    if (alreadyAnswered === undefined) {
-      recordAnswer(question.id, question.conceptId, isCorrect)
+    if (storedChoice === undefined) {
+      recordAnswer(
+        question.id,
+        optionId,
+        question.conceptId,
+        optionId === question.answer,
+      )
     }
   }
 

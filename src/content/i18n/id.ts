@@ -34,13 +34,11 @@ export const id = {
       berikutnya: 'Stasiun berikutnya',
       dariTotal: 'dari',
       daftarStasiun: 'Daftar stasiun',
-      lompat: 'Lompat ke',
       posisiAktif: 'Stasiun aktif',
     },
     ambience: {
       nyalakan: 'Putar suasana napas',
       matikan: 'Hentikan suasana',
-      nonTersedia: 'Suara tidak didukung peramban ini',
     },
     cek: {
       judul: 'Cek pemahaman',
@@ -52,7 +50,6 @@ export const id = {
       hint: 'Petunjuk',
       ulangi: 'Coba lagi',
       tercatat: 'Jawaban tersimpan lokal di perangkatmu (tanpa akun).',
-      terjawab: 'Terjawab',
     },
     interaksi: {
       dustFilter: {

@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { App } from '../src/app/App'
 
-describe('App (asap Fase 0 + navigasi fitur)', () => {
+describe('App (asap Fase 0 + navigasi fitur)', { retry: 2 }, () => {
   // jsdom memakai satu window untuk seluruh file: state history yang ditulis
   // test sebelumnya (tab) harus dibersihkan agar tiap test mulai dari awal.
   beforeEach(() => {

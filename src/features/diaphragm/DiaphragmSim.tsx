@@ -10,7 +10,7 @@ import {
   stepBreath,
   type BreathState,
 } from '../../engine/breathing'
-import type { Level } from '../../engine/types'
+import { useSettingsStore } from '../../app/stores'
 import { ChestSvg } from './ChestSvg'
 import { DataPanel } from './DataPanel'
 import { pressureToY, volumeToX } from './plot'
@@ -27,7 +27,10 @@ const percentToVolume = (pct: number) =>
 
 export function DiaphragmSim() {
   const [mode, setMode] = useState<'perut' | 'dada'>('perut')
-  const [level, setLevel] = useState<Level>('smp')
+  // Tingkat penjelasan dibagikan (§3): murid yang sama di Perjalanan maupun
+  // Simulator memilih satu — pilihan di satu fitur tercatat di yang lain.
+  const level = useSettingsStore((s) => s.level)
+  const setLevel = useSettingsStore((s) => s.setLevel)
 
   const sliderRef = useRef<HTMLInputElement>(null)
   const targetRef = useRef(percentToVolume(REST_PERCENT))
