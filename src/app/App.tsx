@@ -13,13 +13,18 @@ const DiaphragmSim = lazy(() =>
     default: m.DiaphragmSim,
   })),
 )
-type Tab = 'journey' | 'diaphragm'
+const QuizPage = lazy(() =>
+  import('../features/quiz/QuizPage').then((m) => ({
+    default: m.QuizPage,
+  })),
+)
+type Tab = 'journey' | 'diaphragm' | 'quiz'
 
 /** Bentuk state history yang kita simpan (null saat entri pertama). */
 type TabHistoryState = { tab?: Tab } | null
 
 const isTab = (value: unknown): value is Tab =>
-  value === 'journey' || value === 'diaphragm'
+  value === 'journey' || value === 'diaphragm' || value === 'quiz'
 
 /**
  * Halaman utama (Fase 0) + navigasi dua fitur awal:
@@ -76,7 +81,7 @@ export function App() {
           aria-label={id.app.pilihFitur}
           className="tabbar-android mx-auto mt-2 flex flex-wrap justify-center gap-2"
         >
-          {(['journey', 'diaphragm'] as const).map((key) => (
+          {(['journey', 'diaphragm', 'quiz'] as const).map((key) => (
             <button
               key={key}
               type="button"
@@ -104,8 +109,10 @@ export function App() {
       >
         {tab === 'journey' ? (
           <JourneyPage />
-        ) : (
+        ) : tab === 'diaphragm' ? (
           <DiaphragmSim />
+        ) : (
+          <QuizPage />
         )}
       </Suspense>
     </main>

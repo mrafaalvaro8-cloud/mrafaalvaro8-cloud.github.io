@@ -13,6 +13,7 @@ export const id = {
     tabs: {
       journey: 'Perjalanan Napas',
       diaphragm: 'Simulator Diafragma',
+      quiz: 'Kuis',
     },
     pilihFitur: 'Pilih fitur',
   },
@@ -180,4 +181,19 @@ export const id = {
     sumber: 'Sumber',
   },
   scenarios: {},
+  quiz: {
+    judul: 'Kuis Adaptif',
+    petunjuk:
+      'Kerjakan soal berdasarkan konsep yang paling sering kamu salah. Setiap jawaban memperbarui penguasaanmu secara lokal di perangkat.',
+    ringkasan: 'Penguasaan per topik',
+    belum: 'Belum dijawab',
+    sudah: 'Sudah dijawab',
+    lanjut: 'Lanjut ke soal berikutnya',
+    ulangSemua: 'Ulang semua soal',
+    selesai: 'Semua soal sudah dijawab — selamat!',
+    skor: 'Skor rata-rata',
+    konsep: 'Konsep',
+    nextLabel: 'Soal berikutnya',
+    jalan: 'Mulai kuis',
+  },
 } as const
