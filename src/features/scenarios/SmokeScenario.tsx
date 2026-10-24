@@ -15,7 +15,7 @@ import {
  * Animasi silia memakai rAF + ref agar tidak re-render per frame (§11).
  */
 
-const SWEEPS = 18
+const SWEEPS = 20
 const PARTICLE_DOTS = 14
 
 export function SmokeScenario() {
@@ -137,9 +137,9 @@ const sway = (lines: Array<SVGLineElement | null>, speed: number) => {
         <p className="mt-3 text-sm leading-relaxed">{keterangan}</p>
 
         <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <Meter label={t.panelData.kecepatanSilia} value={speedPct} color="var(--co2)" />
-          <Meter label={t.panelData.lendirKeluar} value={cleanPct} color="var(--mucus)" />
-          <Meter label={t.panelData.pertukaranGas} value={gasPct} color="var(--oxygen)" />
+          <Meter key="speed" label={t.panelData.kecepatanSilia} value={speedPct} color="var(--co2)" />
+          <Meter key="clean" label={t.panelData.lendirKeluar} value={cleanPct} color="var(--mucus)" />
+          <Meter key="gas" label={t.panelData.pertukaranGas} value={gasPct} color="var(--oxygen)" />
         </dl>
         <p className="mt-3 text-xs" style={{ color: 'var(--ink-dim)' }}>
           {t.panelData.catatan}
@@ -207,37 +207,48 @@ function Lung({
           d="M108 58 L92 78 M108 58 L124 84 M192 58 L208 78 M192 58 L176 84"
           fill="none" stroke="var(--oxygen)" strokeWidth="2.5" strokeLinecap="round"
         />
-        {/* Silia — karpet rambut menyapu di sepanjang trakea & bronkus.
+        {/* Silia: baris rapat di kedua dinding bronkus, simetris kiri-kanan.
             Pangkal menempel di dinding (data-baseX/Y), ujung menyapu;
-            fase berjalan membuat gelombang metakronal seperti rumput angin. */}
+            fase berjalan membuat gelombang metakronal (A).
+            Index 0..SWEEPS-1 = kiri, SWEEPS..2*SWEEPS-1 = kanan. */}
         <g stroke="var(--mucus)" strokeLinecap="round">
           {Array.from({ length: SWEEPS }, (_, i) => {
-            const wall: [number, number][] = [
-              [144, 10], [146, 14], [148, 18], [150, 22],
-              [148, 26], [142, 30], [132, 36], [122, 44],
-              [114, 52], [108, 60], [102, 68], [96, 78],
-              [90, 88], [86, 98], [82, 108], [80, 118],
-              [80, 128], [82, 138],
-            ]
-            const [baseX, baseY] = wall[i] ?? [140, 22 + i * 6]
-            const len = 9 + (i % 3) * 1.5
+            // Bronkus kiri: (147,40) → (108,58)
+            const tl = i / (SWEEPS - 1)
+            const blx = 147 - tl * 39
+            const bly = 40 + tl * 18
+            // Bronkus kanan: (147,40) → (192,58) — simetris
+            const brx = 147 + tl * 45
+            const bry = 40 + tl * 18
+            const lenL = 7 + (i % 4) * 0.8
+            const lenR = 7 + ((i + 2) % 4) * 0.8
+            const idxL = i
+            const idxR = i + SWEEPS
             return (
-              <line
-                key={i}
-                ref={(el) => {
-                  if (el) {
-                    el.dataset.baseX = String(baseX)
-                    el.dataset.baseY = String(baseY)
-                    el.dataset.len = String(len)
-                  }
-                  registerRef(el, i)
-                }}
-                x1={baseX}
-                y1={baseY}
-                x2={baseX}
-                y2={baseY - len}
-                strokeWidth="1.8"
-              />
+              <g key={i}>
+                <line
+                  x1={blx}
+                  y1={bly}
+                  x2={blx}
+                  y2={bly - lenL}
+                  strokeWidth="2"
+                  data-base-x={String(blx)}
+                  data-base-y={String(bly)}
+                  data-len={String(lenL)}
+                  ref={(el) => registerRef(el, idxL)}
+                />
+                <line
+                  x1={brx}
+                  y1={bry}
+                  x2={brx}
+                  y2={bry - lenR}
+                  strokeWidth="2"
+                  data-base-x={String(brx)}
+                  data-base-y={String(bry)}
+                  data-len={String(lenR)}
+                  ref={(el) => registerRef(el, idxR)}
+                />
+              </g>
             )
           })}
         </g>
