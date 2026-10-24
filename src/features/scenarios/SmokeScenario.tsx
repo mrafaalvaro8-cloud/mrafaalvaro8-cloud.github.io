@@ -41,13 +41,23 @@ export function SmokeScenario() {
       const sehatSpeed = 0.16
       const asapSpeed = ciliaSpeed(p) * 0.16
 
-      const sway = (lines: Array<SVGLineElement | null>, speed: number) => {
+      // Sapuan metakronal: gelombang merambat di sepanjang dinding (fase tiap
+// silia bergeser), terlihat seperti rumput tertiup angin — bukan ayun
+// serentak. Laju mengikuti kadar partikel via `speed` dari engine.
+const sway = (lines: Array<SVGLineElement | null>, speed: number) => {
         for (let i = 0; i < SWEEPS; i++) {
           const line = lines[i]
           if (!line) continue
-          const baseX = 24 + i * 14
-          const sway = Math.sin(frameRef.current * speed * 10 + i * 0.6) * 9
-          line.setAttribute('x2', String(baseX + sway))
+          const phase = frameRef.current * speed * 9 + i * 0.55
+          const bend = Math.sin(phase) * 9
+          // Pivot di pangkal, ujung menyapu — silia "mengayun" seperti menggaruk.
+          // dataset diisi ref saat render, jadi aman (fallback 0 jika tak ada).
+          const bx = Number(line.dataset.baseX ?? 0)
+          const by = Number(line.dataset.baseY ?? 0)
+          const ln = Number(line.dataset.len ?? 10)
+          line.setAttribute('x2', String(bx + bend))
+          line.setAttribute('y2', String(by - ln - Math.abs(Math.cos(phase)) * 2))
+          line.setAttribute('stroke-opacity', String(0.5 + 0.5 * Math.abs(Math.cos(phase))))
         }
       }
       sway(sehatCiliaRefs.current, sehatSpeed)
@@ -197,19 +207,36 @@ function Lung({
           d="M108 58 L92 78 M108 58 L124 84 M192 58 L208 78 M192 58 L176 84"
           fill="none" stroke="var(--oxygen)" strokeWidth="2.5" strokeLinecap="round"
         />
-        {/* Silia di sepanjang dinding bronkus (kiri) — asap memperlambat */}
-        <g stroke="var(--mucus)" strokeWidth="2.5" strokeLinecap="round">
+        {/* Silia — karpet rambut menyapu di sepanjang trakea & bronkus.
+            Pangkal menempel di dinding (data-baseX/Y), ujung menyapu;
+            fase berjalan membuat gelombang metakronal seperti rumput angin. */}
+        <g stroke="var(--mucus)" strokeLinecap="round">
           {Array.from({ length: SWEEPS }, (_, i) => {
-            const baseX = 60 + i * 6
-            const y = 66 + i * 2
+            const wall: [number, number][] = [
+              [144, 10], [146, 14], [148, 18], [150, 22],
+              [148, 26], [142, 30], [132, 36], [122, 44],
+              [114, 52], [108, 60], [102, 68], [96, 78],
+              [90, 88], [86, 98], [82, 108], [80, 118],
+              [80, 128], [82, 138],
+            ]
+            const [baseX, baseY] = wall[i] ?? [140, 22 + i * 6]
+            const len = 9 + (i % 3) * 1.5
             return (
               <line
                 key={i}
-                ref={(el) => registerRef(el, i)}
+                ref={(el) => {
+                  if (el) {
+                    el.dataset.baseX = String(baseX)
+                    el.dataset.baseY = String(baseY)
+                    el.dataset.len = String(len)
+                  }
+                  registerRef(el, i)
+                }}
                 x1={baseX}
-                y1={y}
+                y1={baseY}
                 x2={baseX}
-                y2={y - 8}
+                y2={baseY - len}
+                strokeWidth="1.8"
               />
             )
           })}
