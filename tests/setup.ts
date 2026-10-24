@@ -8,7 +8,7 @@ import { useProgressStore, useSettingsStore } from '../src/app/stores'
  * di worker berbeda yang memuat setup ini berkali-kali. Tanpa pembersihan,
  * pohon React serta DOM bekas tes sebelumnya bisa tertinggal dan menyebabkan
  * kegagalan sesekali (flaky) — terutama pada tes yang menunggu komponen
- * lazy/async seperti tests/app-smoke.test.tsx.
+ * lazy/async di berbagai berkas tes.
  */
 
 // Bersihkan penanda khusus yang dipasang komponen & tes.

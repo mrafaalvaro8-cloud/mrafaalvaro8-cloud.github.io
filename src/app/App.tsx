@@ -13,19 +13,13 @@ const DiaphragmSim = lazy(() =>
     default: m.DiaphragmSim,
   })),
 )
-const SmokeScenario = lazy(() =>
-  import('../features/scenarios/SmokeScenario').then((m) => ({
-    default: m.SmokeScenario,
-  })),
-)
-
-type Tab = 'journey' | 'diaphragm' | 'asap'
+type Tab = 'journey' | 'diaphragm'
 
 /** Bentuk state history yang kita simpan (null saat entri pertama). */
 type TabHistoryState = { tab?: Tab } | null
 
 const isTab = (value: unknown): value is Tab =>
-  value === 'journey' || value === 'diaphragm' || value === 'asap'
+  value === 'journey' || value === 'diaphragm'
 
 /**
  * Halaman utama (Fase 0) + navigasi dua fitur awal:
@@ -82,7 +76,7 @@ export function App() {
           aria-label={id.app.pilihFitur}
           className="tabbar-android mx-auto mt-2 flex flex-wrap justify-center gap-2"
         >
-          {(['journey', 'diaphragm', 'asap'] as const).map((key) => (
+          {(['journey', 'diaphragm'] as const).map((key) => (
             <button
               key={key}
               type="button"
@@ -110,10 +104,8 @@ export function App() {
       >
         {tab === 'journey' ? (
           <JourneyPage />
-        ) : tab === 'diaphragm' ? (
-          <DiaphragmSim />
         ) : (
-          <SmokeScenario />
+          <DiaphragmSim />
         )}
       </Suspense>
     </main>

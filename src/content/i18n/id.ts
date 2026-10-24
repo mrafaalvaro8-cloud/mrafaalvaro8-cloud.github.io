@@ -13,7 +13,6 @@ export const id = {
     tabs: {
       journey: 'Perjalanan Napas',
       diaphragm: 'Simulator Diafragma',
-      asap: 'Kabut Asap',
     },
     pilihFitur: 'Pilih fitur',
   },
@@ -180,43 +179,5 @@ export const id = {
     pelajaranLabel: 'Penjelasan',
     sumber: 'Sumber',
   },
-  scenarios: {
-    asap: {
-      judul: 'Hari Berkabut Asap',
-      petunjuk:
-        'Geser kadar partikel untuk melihat paru sehat dibanding paru yang terpapar kabut asap (PM2.5). Lalu temukan cara melindungi diri.',
-      slider: 'Kadar partikel asap',
-      label: {
-        sehat: 'Udara bersih',
-        sedang: 'Kadar sedang',
-        pekat: 'Kabut asap pekat',
-      },
-      kondisiSehat: 'Paru sehat',
-      kondisiAsap: 'Terpapar asap',
-      panelData: {
-        judul: 'Panel data',
-        kecepatanSilia: 'Kecepatan sapuan silia',
-        lendirKeluar: 'Lendir berdebu dikeluarkan',
-        pertukaranGas: 'Pertukaran gas di alveolus',
-        catatan: 'Model sederhana untuk belajar',
-      },
-      keteranganSehat:
-        'Silia menyapu lendir berdebu dengan lancar, alveolus tetap bersih dan pertukaran gas normal.',
-      keteranganSedang:
-        'Silia mulai melambat. Sebagian lendir menumpuk dan irigasi alveolus sedikit terganggu.',
-      keteranganPekat:
-        'Silia nyaris berhenti, lendir menumpuk, dinding alveolus teriritasi. Pertukaran gas menurun — inilah yang membuat napas terasa berat.',
-      tindakan: {
-        judul: 'Apa yang bisa kamu lakukan?',
-        poin: [
-          'Pakai masker yang tepat saat berada di luar ruangan berasap.',
-          'Tetap di dalam ruangan dan tutup jendela ketika kualitas udara buruk.',
-          'Cek kualitas udara sebelum keluar.',
-          'Jika batuk atau sesak tidak membaik, temui tenaga kesehatan.',
-        ],
-        peringatan:
-          'Model sederhana untuk belajar — kabut asap nyata bisa jauh lebih kompleks. Selalu ikuti arahan tenaga kesehatan.',
-      },
-    },
-  },
+  scenarios: {},
 } as const
