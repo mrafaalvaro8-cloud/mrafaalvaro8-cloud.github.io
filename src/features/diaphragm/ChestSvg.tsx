@@ -55,17 +55,34 @@ export function ChestSvg(props: ChestProps) {
         <path d="M 212 34 L 224 14 L 236 34 Z" fill="var(--co2)" />
       </g>
 
-      {/* Paru-paru (dibesarkan/dikecilkan per frame) */}
+      {/* Paru-paru (dibesarkan/dikecilkan per frame) — bentuk anatomi:
+          puncak (apex) runcing di atas, dasar lebar cekung di atas diafragma,
+          dan paru kiri punya lekukan jantung (cardiac notch). */}
       <g ref={props.lungs}>
+        {/* Paru kiri (ada lekukan jantung di sisi dalam bawah) */}
         <path
-          d="M 168 108 C 130 112 108 150 106 195 C 105 232 128 252 158 246 C 176 242 184 220 186 190 C 188 158 184 124 168 108 Z"
+          d="M 176 98
+             C 148 98 120 122 114 156
+             C 108 190 112 228 124 240
+             C 132 248 146 250 156 242
+             C 164 236 170 218 172 198
+             C 176 214 184 224 194 226
+             C 204 228 210 220 210 206
+             C 210 196 206 190 200 184
+             C 196 156 196 118 176 98 Z"
           fill="var(--oxygen)"
           fillOpacity="0.16"
           stroke="var(--oxygen)"
           strokeWidth="3"
         />
+        {/* Paru kanan (3 lobus, lebih besar, tanpa lekukan jantung) */}
         <path
-          d="M 232 108 C 270 112 292 150 294 195 C 295 232 272 252 242 246 C 224 242 216 220 214 190 C 212 158 216 124 232 108 Z"
+          d="M 224 98
+             C 252 98 280 122 286 156
+             C 292 190 288 228 276 240
+             C 268 248 254 250 244 242
+             C 236 236 230 218 228 198
+             C 226 172 222 124 224 98 Z"
           fill="var(--oxygen)"
           fillOpacity="0.16"
           stroke="var(--oxygen)"

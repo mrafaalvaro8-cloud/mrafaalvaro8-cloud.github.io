@@ -178,27 +178,30 @@ function Lung({
       </figcaption>
       <svg viewBox="0 0 300 170" role="img" aria-label={aria} className="w-full">
         <title>{aria}</title>
-        {/* Dua cabang bronkus */}
+        {/* Dua paru dalam dada — bentuk anatomi (apex di atas, dasar di bawah) */}
         <path
-          d="M150 8 L110 60 M150 8 L190 60 M110 60 L70 100 M190 60 L230 100"
-          fill="none"
-          stroke="var(--oxygen)"
-          strokeWidth="6"
-          strokeLinecap="round"
+          d="M 118 22 C 90 22 58 46 50 78 C 42 112 48 146 74 152 C 92 156 104 148 108 128 C 116 100 122 46 118 22 Z"
+          fill="var(--oxygen)" fillOpacity="0.10" stroke="var(--oxygen)" strokeWidth="2"
         />
-        {/* Alveoli (kantong) */}
-        {[
-          [70, 120], [40, 145], [100, 150],
-          [150, 130], [120, 155], [180, 155],
-          [230, 120], [200, 150], [260, 145],
-        ].map(([cx, cy], i) => (
-          <circle key={i} cx={cx} cy={cy} r={14} fill="var(--oxygen)" fillOpacity={0.14} stroke="var(--oxygen)" strokeWidth="2" />
-        ))}
-        {/* Silia di sepanjang bronkus */}
+        <path
+          d="M 182 22 C 210 22 242 46 250 78 C 258 112 252 146 226 152 C 208 156 196 148 192 128 C 184 100 178 46 182 22 Z"
+          fill="var(--oxygen)" fillOpacity="0.10" stroke="var(--oxygen)" strokeWidth="2"
+        />
+        {/* Trakea + percabangan bronkus */}
+        <path
+          d="M150 6 L150 40 M150 40 L108 58 M150 40 L192 58"
+          fill="none" stroke="var(--ink-dim)" strokeWidth="6" strokeLinecap="round"
+        />
+        {/* Cabang bronkiolus kecil */}
+        <path
+          d="M108 58 L92 78 M108 58 L124 84 M192 58 L208 78 M192 58 L176 84"
+          fill="none" stroke="var(--oxygen)" strokeWidth="2.5" strokeLinecap="round"
+        />
+        {/* Silia di sepanjang dinding bronkus (kiri) — asap memperlambat */}
         <g stroke="var(--mucus)" strokeWidth="2.5" strokeLinecap="round">
           {Array.from({ length: SWEEPS }, (_, i) => {
-            const baseX = 24 + i * 14
-            const y = 62 + Math.sin(i * 0.9) * 26
+            const baseX = 60 + i * 6
+            const y = 66 + i * 2
             return (
               <line
                 key={i}
@@ -206,12 +209,12 @@ function Lung({
                 x1={baseX}
                 y1={y}
                 x2={baseX}
-                y2={y - 10}
+                y2={y - 8}
               />
             )
           })}
         </g>
-        {/* Partikel asap (kanan) — jumlah sebanding kadar */}
+        {/* Partikel asap — jumlah sebanding kadar */}
         {particle > 0 &&
           Array.from({ length: Math.round(PARTICLE_DOTS * particle) }, (_, i) => (
             <circle
@@ -223,8 +226,6 @@ function Lung({
               fillOpacity={0.6}
             />
           ))}
-        {/* Arah aliran lendir */}
-        <path d="M 20 150 L 34 150 M 26 146 L 30 150 L 26 154" fill="none" stroke="var(--ink-dim)" strokeWidth="2" />
       </svg>
     </figure>
   )
