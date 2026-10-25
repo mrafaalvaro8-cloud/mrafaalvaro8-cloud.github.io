@@ -8,13 +8,17 @@ export type PressureGraphProps = {
 
 /**
  * Mode SMA (M2): grafik berjalan P × V = konstan. Titik berwarna biru
- * (O₂) menunjukkan kondisi terkini dari engine.
+ * (O₂) menunjukkan kondisi terkini dari engine. Selalu menampilkan label
+ * "Model sederhana untuk belajar" (§7.3, §9) dan teks status — jangan
+ * hanya warna.
  */
 export function PressureGraph(props: PressureGraphProps) {
   const t = id.diaphragm.grafik
   return (
     <figure className="rounded-xl border border-white/10 bg-white/5 p-4">
-      <figcaption className="mb-2 text-sm font-semibold">{t.judul}</figcaption>
+      <figcaption className="mb-2 text-sm font-semibold">
+        {t.judul} {t.pelajaranCatatan}
+      </figcaption>
       <svg
         viewBox="0 0 330 200"
         role="img"
@@ -37,6 +41,16 @@ export function PressureGraph(props: PressureGraphProps) {
           stroke="var(--bg-deep)"
           strokeWidth="2"
         />
+        {/* Label "Model sederhana untuk belajar" */}
+        <text
+          x="165"
+          y="30"
+          textAnchor="middle"
+          fontSize="10"
+          fill="var(--ink-dim)"
+        >
+          Model sederhana untuk belajar
+        </text>
         {/* Label sumbu */}
         <text x="177" y="194" textAnchor="middle" fontSize="12" fill="var(--ink-dim)">
           {t.x}

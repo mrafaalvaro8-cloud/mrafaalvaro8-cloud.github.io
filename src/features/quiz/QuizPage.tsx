@@ -191,7 +191,7 @@ export function QuizPage() {
                       }
                     }}
                     aria-pressed={picked}
-                    className="min-h-11 w-full rounded-lg border px-3 py-2 text-left text-sm disabled:cursor-default"
+                    className="min-h-11 w-full rounded-lg border px-3 py-2 text-left text-sm disabled:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--oxygen)]"
                     style={{
                       borderColor:
                         state2 === 'right'

@@ -22,6 +22,9 @@ export function DataPanel(props: DataPanelProps) {
       className="rounded-xl border border-white/10 bg-white/5 p-4"
     >
       <h3 className="mb-3 text-sm font-semibold">{t.panel.judul}</h3>
+      <p className="text-xs mb-3" style={{ color: 'var(--ink-dim)' }}>
+        {t.panel.catatan}
+      </p>
       <dl className="grid gap-3">
         <div>
           <dt className="text-xs" style={{ color: 'var(--ink-dim)' }}>

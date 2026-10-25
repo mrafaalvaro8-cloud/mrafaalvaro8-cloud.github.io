@@ -253,9 +253,7 @@ export function DiaphragmSim() {
                   type="button"
                   aria-pressed={mode === m}
                   onClick={() => setMode(m)}
-                  className={`min-h-11 rounded-lg border px-3 py-2 text-left text-sm ${
-                    mode === m ? 'font-semibold' : ''
-                  }`}
+                  className="min-h-11 rounded-lg border px-3 py-2 text-left text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mucus)]"
                   style={{
                     borderColor:
                       mode === m ? 'var(--oxygen)' : 'rgba(255,255,255,0.2)',

@@ -23,6 +23,7 @@ export const id = {
     sumber: 'Sumber',
     kurangiGerak: 'Kurangi gerak',
     modelCatatan: 'Model sederhana untuk belajar',
+pelajaranCatatan: '(catatan: model sederhana untuk belajar)',
     stasiun: 'Stasiun',
   },
   journey: {

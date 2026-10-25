@@ -108,7 +108,7 @@ export function JourneyPage() {
               type="button"
               aria-pressed={level === lv}
               onClick={() => setLevel(lv)}
-              className="min-h-11 rounded-full border px-4 text-sm"
+              className="min-h-11 rounded-full border px-4 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--oxygen)]"
               style={{
                 borderColor: level === lv ? 'var(--mucus)' : 'rgba(255,255,255,0.2)',
                 color: level === lv ? 'var(--mucus)' : 'var(--ink)',
@@ -124,7 +124,7 @@ export function JourneyPage() {
           type="button"
           aria-pressed={reduceMotion}
           onClick={() => setReduceMotion(!reduceMotion)}
-          className="min-h-11 rounded-full border px-4 text-sm"
+          className="min-h-11 rounded-full border px-4 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--co2)]"
           style={{
             borderColor: reduceMotion ? 'var(--co2)' : 'rgba(255,255,255,0.2)',
             color: reduceMotion ? 'var(--co2)' : 'var(--ink)',
@@ -138,7 +138,7 @@ export function JourneyPage() {
             type="button"
             aria-pressed={soundOn}
             onClick={toggleSound}
-            className="min-h-11 rounded-full border px-4 text-sm"
+            className="min-h-11 rounded-full border px-4 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--oxygen)]"
             style={{
               borderColor: soundOn ? 'var(--oxygen)' : 'rgba(255,255,255,0.2)',
               color: soundOn ? 'var(--oxygen)' : 'var(--ink)',
@@ -166,7 +166,7 @@ export function JourneyPage() {
             type="button"
             onClick={() => goTo(active - 1)}
             disabled={active === 0}
-            className="min-h-11 rounded-lg border px-4 text-sm disabled:opacity-40"
+            className="min-h-11 rounded-lg border px-4 text-sm disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--oxygen)]"
             style={{ borderColor: 'rgba(255,255,255,0.25)' }}
           >
             ← {t.nav.sebelumnya}
@@ -175,7 +175,7 @@ export function JourneyPage() {
             type="button"
             onClick={() => goTo(active + 1)}
             disabled={active === stations.length - 1}
-            className="min-h-11 rounded-lg border px-4 text-sm disabled:opacity-40"
+            className="min-h-11 rounded-lg border px-4 text-sm disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--oxygen)]"
             style={{ borderColor: 'rgba(255,255,255,0.25)' }}
           >
             {t.nav.berikutnya} →

@@ -199,6 +199,9 @@ export function DustFilter() {
           {t.tertangkap}: <strong>{caught}</strong> · {t.lolos}:{' '}
           <strong>{escaped}</strong>
         </p>
+        <p className="text-xs" style={{ color: 'var(--ink-dim)' }}>
+          {t.modelCatatan}
+        </p>
       </div>
       <p className="mt-2 text-xs" style={{ color: 'var(--ink-dim)' }}>
         {perfect ? t.keteranganSehat : escaped > 0 ? t.keteranganBocor : ''}
