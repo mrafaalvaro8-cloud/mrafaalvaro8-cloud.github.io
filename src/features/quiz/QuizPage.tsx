@@ -162,7 +162,7 @@ export function QuizPage() {
           <p className="mb-3 text-sm font-medium">{question.prompt}</p>
 
           <ul className="flex flex-col gap-2" role="group" aria-label={id.journey.cek.pilihan}>
-            {question.options?.map((option) => {
+            {question.options?.map((option, optIdx) => {
               const picked = choice === option.id
               const isAnswer = option.id === question.answer
               const done = question.id in answers
@@ -191,6 +191,7 @@ export function QuizPage() {
                       }
                     }}
                     aria-pressed={picked}
+                    data-testid={`quiz-option-${optIdx}`}
                     className="min-h-11 w-full rounded-lg border px-3 py-2 text-left text-sm disabled:cursor-default"
                     style={{
                       borderColor:

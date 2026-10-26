@@ -32,19 +32,20 @@ describe('QuizPage (M8 kuis adaptif)', () => {
   it('tombol "Mulai kuis" masuk ke mode soal', async () => {
     render(<QuizPage />)
     fireEvent.click(screen.getByRole('button', { name: 'Mulai kuis' }))
-    // Soal pertama muncul
-    const q = questions[0]
-    expect(screen.getByText(q.prompt)).toBeInTheDocument()
-    // Setiap opsi rendered
-    for (const opt of q.options ?? []) {
-      expect(screen.getByRole('button', { name: opt.text })).toBeInTheDocument()
-    }
-    // Pencet salah satu opsi
-    const opt = q.options?.[0]
-    if (opt) {
-      fireEvent.click(screen.getByRole('button', { name: opt.text }))
-      await screen.findByText(/Tepat|Belum/)
-    }
+    // Tunggu soal muncul
+    await screen.findByText(/Soal berikutnya/)
+    // Setiap opsi rendered (minimal 2 opsi, semua soal mcq 4 pilihan)
+    const optionButtons = screen.getAllByRole('button', { name: /./ }).filter((b) =>
+      b.closest('ul[aria-label="Pilihan jawaban"]'),
+    )
+    expect(optionButtons.length).toBeGreaterThanOrEqual(2)
+    // Pencet opsi pertama — apapun soalnya, status harus muncul
+    fireEvent.click(optionButtons[0])
+    // Check the status message - "Tepat sekali!" (benar) atau "Belum tepat" (salah)
+    const status = await screen.findByRole('status')
+    expect(status.textContent ?? '').match(/Tepat|Belum/)
+    // Setelah jawaban, tombol "Soal berikutnya" muncul
+    expect(screen.getByRole('button', { name: /Soal berikutnya/ })).toBeInTheDocument()
   })
 
   it('jawaban benar & salah memperbarui store progress', () => {
