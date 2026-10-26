@@ -97,6 +97,7 @@ export function QuizPage() {
           {Array.from(new Set(questions.map((q) => q.conceptId))).map((conceptId) => {
             const m = mastery[conceptId] ?? 0
             const label = conceptId
+              .replace(/-co2$/, '-CO₂')
               .split('-')
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
               .join(' ')

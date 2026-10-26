@@ -21,6 +21,7 @@ describe('QuizPage (M8 kuis adaptif)', () => {
     for (const id of konsepIds) {
       // label di-render sebagai camelCase → title case
       const label = id
+        .replace(/-co2$/, '-CO₂')
         .split('-')
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(' ')

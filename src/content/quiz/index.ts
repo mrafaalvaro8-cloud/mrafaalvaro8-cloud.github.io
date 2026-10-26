@@ -160,10 +160,10 @@ export const questions: Question[] = [
     hint: 'Coba ingat rumus P₁·V₁ = P₂·V₂ — bila V naik, P turun.',
     source: 'Fisika SMA — Hukum Boyle (gas ideal suhu tetap)',
   },
-  // M2 Simulator Diafragma → mekanisme-naoas
+  // M2 Simulator Diafragma → mekanisme-nafas
   {
-    id: 'quiz-mekanisme-naoas',
-    conceptId: 'mekanisme-naoas',
+    id: 'quiz-mekanisme-nafas',
+    conceptId: 'mekanisme-nafas',
     level: 'sd',
     type: 'mcq',
     prompt: 'Otot utama yang membantu kita bernapas adalah…',
