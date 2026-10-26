@@ -1,101 +1,120 @@
 import type { Question } from '../../engine/types'
 
 /**
- * Bank soal kuis adaptif per topik (§8).
+ * Bank soal kuis adaptif — selaras dengan 7 stasiun Perjalanan Napas (M1)
+ * dan Simulator Diafragma (M2).
+ * Setiap conceptId harus ada di stations.ts atau di diaphragm sim.
  * Setiap soal wajib punya `explanation` (mengapa benar & mengapa pengecoh salah)
  * dan `level`.
  */
 export const questions: Question[] = [
+  // Stasiun 1: Hidung → pertahanan-hidung
   {
-    id: 'quiz-difusi',
-    conceptId: 'difusi-alveolus',
+    id: 'quiz-pertahanan-hidung',
+    conceptId: 'pertahanan-hidung',
     level: 'smp',
     type: 'mcq',
-    prompt:
-      'Mengapa O₂ masuk ke darah dan CO₂ keluar di alveolus?',
+    prompt: 'Apa fungsi rambut halus dan lendir di dalam hidung?',
     options: [
-      {
-        id: 'a',
-        text:
-          'O₂ dan CO₂ bergerak menuruni gradien tekanan masing-masing.',
-      },
-      {
-        id: 'b',
-        text:
-          'Pompa jantung menarik keduanya langsung ke dalam pembuluh kapiler.',
-      },
-      {
-        id: 'c',
-        text:
-          'O₂ tertarik oleh tekanan negatif di dalam paru, CO₂ terdorong panas.',
-      },
-      {
-        id: 'd',
-        text:
-          'Keduanya berpindah lewat proses aktif yang membutuhkan energi sel.',
-      },
+      { id: 'a', text: 'Menyaring debu dan kotoran dari udara' },
+      { id: 'b', text: 'Mendinginkan udara agar tubuh kedinginan' },
+      { id: 'c', text: 'Menyerap oksigen langsung ke darah' },
+      { id: 'd', text: 'Membuat suara saat kita bersuara' },
     ],
     answer: 'a',
     explanation:
-      'Benar! Difusi berlangsung karena perbedaan tekanan parsial — O₂ tinggi di alveolus, rendah di darah; sebaliknya untuk CO₂. Ini proses pasif, tanpa pompa atau energi sel. Pilihan lain salah karena mengira ada mekanisme "penarik" atau "pemaksa" di alveolus.',
-    hint: 'Ingat hukum difusi: zat bergerak dari tempat banyak ke tempat sedikit.',
+      'Benar! Rambut dan lendir menjebak debu serta kotoran supaya tidak masuk ke paru-paru. Pilihan lain salah: udara justru dihangatkan, oksigen baru masuk darah di alveolus, dan suara dibuat pita suara di laring.',
+    hint: 'Fungsinya seperti "penyaring" di pintu masuk.',
+    source: 'Buku IPA — sistem pernapasan manusia (Kurikulum Merdeka)',
+  },
+  // Stasiun 2: Faring & Laring → epiglotis
+  {
+    id: 'quiz-epiglotis',
+    conceptId: 'epiglotis',
+    level: 'smp',
+    type: 'mcq',
+    prompt: 'Apa yang terjadi pada epiglotis saat kita menelan?',
+    options: [
+      { id: 'a', text: 'Membuka lebar agar udara masuk lebih banyak' },
+      { id: 'b', text: 'Menutup jalan napas agar makanan tidak masuk trakea' },
+      { id: 'c', text: 'Bergetar untuk menghasilkan suara' },
+      { id: 'd', text: 'Meleleh lalu tumbuh lagi setelah menelan' },
+    ],
+    answer: 'b',
+    explanation:
+      'Tepat! Epiglotis menutup pembukaan laring saat menelan, jadi makanan langsung ke kerongkongan. Pilihan lain salah: yang bergetar adalah pita suara, epiglotis justru harus tertutup — bukan terbuka — saat menelan.',
+    hint: 'Bayangkan epiglotis seperti tutup panci kecil.',
+    source: 'Buku Biologi SMA — sistem pernapasan dan anatomi laring',
+  },
+  // Stasiun 3: Trakea → silia-rokok
+  {
+    id: 'quiz-silia-rokok',
+    conceptId: 'silia-rokok',
+    level: 'smp',
+    type: 'mcq',
+    prompt: 'Mengapa perokok sering batuk berdahak?',
+    options: [
+      { id: 'a', text: 'Paru-peru perokok menjadi terlalu dingin' },
+      { id: 'b', text: 'Gerak silia melambat sehingga lendir berdebu menumpuk' },
+      { id: 'c', text: 'Cincin tulang rawan trakea patah menahan asap' },
+      { id: 'd', text: 'Lendir perokok berwarna hijau dan berat ditahan' },
+    ],
+    answer: 'b',
+    explanation:
+      'Benar! Asap rokok memperlambat sapuan silia, sehingga lendir berdebu tidak tersapu keluar dan menumpuk. Batuk berdahak adalah cara tubuh membersihkan penumpukan itu. Pilihan lain tidak tepat: masalah utamanya pada silia, bukan suhu atau patahnya tulang rawan.',
+    hint: 'Ingat sapuan silia di trakea — siapa yang menyapu lendir?',
+    source: 'WHO — bahaya rokok bagi sistem pernapasan',
+  },
+  // Stasiun 4: Bronkus → lobus-paru
+  {
+    id: 'quiz-lobus-paru',
+    conceptId: 'lobus-paru',
+    level: 'smp',
+    type: 'mcq',
+    prompt: 'Mengapa paru kiri hanya memiliki 2 lobus?',
+    options: [
+      { id: 'a', text: 'Memberi ruang bagi jantung' },
+      { id: 'b', text: 'Paru kiri sedang tumbuh dan belum lengkap' },
+      { id: 'c', text: 'Karena paru kiri bekerja lebih ringan' },
+      { id: 'd', text: 'Agar udara masuk hanya ke paru kanan' },
+    ],
+    answer: 'a',
+    explanation:
+      'Tepat! Jantung sedikit bersandar ke kiri, sehingga paru kiri hanya berisi 2 lobus agar ada ruang untuk jantung. Paru kanan tetap 3 lobus. Pilihan lain salah — kedua paru sama-sama bekerja, tidak ada yang "menganggur".',
+    hint: 'Di mana posisi jantung kamu?',
+    source: 'Buku Biologi SMA — anatomi paru-paru',
+  },
+  // Stasiun 5: Alveolus → difusi-alveolus
+  {
+    id: 'quiz-difusi-alveolus',
+    conceptId: 'difusi-alveolus',
+    level: 'smp',
+    type: 'mcq',
+    prompt: 'Bagaimana arah gerak O₂ dan CO₂ di alveolus?',
+    options: [
+      { id: 'a', text: 'O₂ ke darah dan CO₂ ke alveolus, keduanya menuruni gradien tekanan' },
+      { id: 'b', text: 'O₂ dan CO₂ sama-sama masuk ke darah' },
+      { id: 'c', text: 'Keduanya didorong pompa jantung langsung di alveolus' },
+      { id: 'd', text: 'CO₂ masuk ke alveolus karena tertarik O₂' },
+    ],
+    answer: 'a',
+    explanation:
+      'Benar! O₂ bergerak dari alveolus (pO₂ tinggi) ke darah (pO₂ rendah), sedangkan CO₂ bergerak ke arah berlawanan. Keduanya menuruni gradien tekanan parsial — tidak ada "pompa" di sana, hanya perbedaan tekanan.',
+    hint: 'Zat selalu bergerak dari yang banyak ke yang sedikit.',
     source: 'Buku Biologi SMA — pertukaran gas dan Hukum Fick',
   },
+  // Stasiun 6: Sel Darah Merah → transpor-gas
   {
-    id: 'quiz-boyle',
-    conceptId: 'hukum-boyle',
-    level: 'sma',
-    type: 'mcq',
-    prompt:
-      'Saat diafragma berkontraksi turun, apa yang terjadi pada tekanan intrapulmoner?',
-    options: [
-      {
-        id: 'a',
-        text: 'Tekanan naik di atas atmosfer → udara masuk.',
-      },
-      {
-        id: 'b',
-        text: 'Volume paru mengecil → tekanan turun → udara masuk.',
-      },
-      {
-        id: 'c',
-        text: 'Volume rongga dada membesar → tekanan turun di bawah atmosfer → udara masuk.',
-      },
-      {
-        id: 'd',
-        text: 'Tekanan tetap sama dengan atmosfer, tapi otot menghisap udara.',
-      },
-    ],
-    answer: 'c',
-    explanation:
-      'Benar! Hukum Boyle: P × V = konstan. Saat volume rongga dada membesar (diafragma turun, rusuk naik), tekanan intrapulmoner turun di bawah tekanan atmosfer, sehingga udara masuk. Pilihan lain salah karena mencampuradukkan arah perubahan tekanan atau menganggap ada "penghisap".',
-    hint: 'Coba ingat rumus P₁·V₁ = P₂·V₂ — bila V naik, P turun.',
-    source: 'Fisika SMA — Hukum Boyle (gas ideal suhu tetap)',
-  },
-  {
-    id: 'quiz-hemoglobin',
+    id: 'quiz-transpor-gas',
     conceptId: 'transpor-gas',
     level: 'smp',
     type: 'mcq',
-    prompt:
-      'Apa yang terjadi pada hemoglobin saat darah melewati jaringan otot yang aktif?',
+    prompt: 'Apa yang terjadi pada hemoglobin saat darah melewati jaringan otot yang aktif?',
     options: [
-      {
-        id: 'a',
-        text: 'Hemoglobin mengikat lebih banyak O₂ karena otot butuh oksigen.',
-      },
-      {
-        id: 'b',
-        text: 'Hemoglobin melepaskan O₂ karena pO₂ di jaringan lebih rendah daripada di paru.',
-      },
-      {
-        id: 'c',
-        text: 'Hemoglobin berubah menjadi protein lain untuk menyimpan CO₂.',
-      },
-      {
-        id: 'd',
-        text: 'Hemoglobin tidak berubah, O₂ tetap terikat sampai kembali ke paru.',
-      },
+      { id: 'a', text: 'Hemoglobin mengikat lebih banyak O₂ karena otot butuh oksigen' },
+      { id: 'b', text: 'Hemoglobin melepaskan O₂ karena pO₂ di jaringan lebih rendah daripada di paru' },
+      { id: 'c', text: 'Hemoglobin berubah menjadi protein lain untuk menyimpan CO₂' },
+      { id: 'd', text: 'Hemoglobin tidak berubah, O₂ tetap terikat sampai kembali ke paru' },
     ],
     answer: 'b',
     explanation:
@@ -103,61 +122,18 @@ export const questions: Question[] = [
     hint: 'Hemoglobin itu kurir: ia menyerahkan paket saat sampai tujuan.',
     source: 'Buku Biologi SMA — transpor gas dan hemoglobin',
   },
+  // Stasiun 7: Pulang → ekspirasi-co2
   {
-    id: 'quiz-silia',
-    conceptId: 'silia-rokok',
-    level: 'smp',
-    type: 'mcq',
-    prompt:
-      'Apa dampak jangka panjang paparan asap rokok terhadap sistem pembersihan trakea?',
-    options: [
-      {
-        id: 'a',
-        text: 'Silia tumbuh lebih banyak untuk menyaring lebih banyak partikel.',
-      },
-      {
-        id: 'b',
-        text: 'Silia melambat atau rusak, lendir menumpuk, risiko infeksi meningkat.',
-      },
-      {
-        id: 'c',
-        text: 'Cincin tulang rawan menebal menutup saluran napas.',
-      },
-      {
-        id: 'd',
-        text: 'Lendir menjadi lebih encer sehingga lebih mudah dikeluarkan.',
-      },
-    ],
-    answer: 'b',
-    explanation:
-      'Benar! Asap rokok merusak silia dan memperlambat frekuensi sapuan. Lendir berdebu menumpuk → batuk berdahak dan risiko infeksi jalan napas naik. Pilihan lain salah karena menggambarkan efek sebaliknya atau mekanisme yang tidak terjadi.',
-    hint: 'Silia adalah "sapu" mikro di saluran napas — apa yang terjadi bila sapunya lumpuh?',
-    source: 'WHO — dampak tembakau terhadap kesehatan pernapasan',
-  },
-  {
-    id: 'quiz-ekspirasi',
+    id: 'quiz-ekspirasi-co2',
     conceptId: 'ekspirasi-co2',
     level: 'sd',
     type: 'mcq',
-    prompt:
-      'Apa yang terjadi pada volume dan tekanan saat kita menghembuskan napas (ekspirasi)?',
+    prompt: 'Apa yang terjadi pada volume dan tekanan saat kita menghembuskan napas (ekspirasi)?',
     options: [
-      {
-        id: 'a',
-        text: 'Volume paru membesar, tekanan turun, udara masuk.',
-      },
-      {
-        id: 'b',
-        text: 'Diafragma turun, volume bertambah, tekanan sama.',
-      },
-      {
-        id: 'c',
-        text: 'Volume rongga dada mengecil, tekanan naik di atas atmosfer, udara keluar.',
-      },
-      {
-        id: 'd',
-        text: 'Otot dinding perut relaks, udara keluar karena gravitasi.',
-      },
+      { id: 'a', text: 'Volume paru membesar, tekanan turun, udara masuk' },
+      { id: 'b', text: 'Diafragma turun, volume bertambah, tekanan sama' },
+      { id: 'c', text: 'Volume rongga dada mengecil, tekanan naik di atas atmosfer, udara keluar' },
+      { id: 'd', text: 'Otot dinding perut relaks, udara keluar karena gravitasi' },
     ],
     answer: 'c',
     explanation:
@@ -165,314 +141,42 @@ export const questions: Question[] = [
     hint: 'Inspirasi = tarik napas (volume ↑), ekspirasi = hembuskan (volume ↓).',
     source: 'Buku IPA SD–SMP — mekanisme pernapasan (Kurikulum Merdeka)',
   },
+  // M2 Simulator Diafragma → hukum-boyle
   {
-    id: 'quiz-lobus',
-    conceptId: 'lobus-paru',
-    level: 'smp',
+    id: 'quiz-hukum-boyle',
+    conceptId: 'hukum-boyle',
+    level: 'sma',
     type: 'mcq',
-    prompt:
-      'Manakah pernyataan yang tepat tentang perbandingan paru kanan dan kiri?',
+    prompt: 'Saat diafragma berkontraksi turun, apa yang terjadi pada tekanan intrapulmoner?',
     options: [
-      {
-        id: 'a',
-        text: 'Paru kanan 2 lobus, paru kiri 3 lobus — simetris dengan jantung.',
-      },
-      {
-        id: 'b',
-        text: 'Paru kanan lebih kecil karena jantung menekan dari sebelah kanan.',
-      },
-      {
-        id: 'c',
-        text: 'Paru kanan 3 lobus, paru kiri 2 lobus karena ruang jantung.',
-      },
-      {
-        id: 'd',
-        text: 'Kedua paru memiliki 3 lobus yang sama persis ukurannya.',
-      },
+      { id: 'a', text: 'Tekanan naik di atas atmosfer → udara masuk' },
+      { id: 'b', text: 'Volume paru mengecil → tekanan turun → udara masuk' },
+      { id: 'c', text: 'Volume rongga dada membesar → tekanan turun di bawah atmosfer → udara masuk' },
+      { id: 'd', text: 'Tekanan tetap sama dengan atmosfer, tapi otot menghisap udara' },
     ],
     answer: 'c',
     explanation:
-      'Benar! Paru kanan 3 lobus (atas, tengah, bawah), paru kiri 2 lobus (atas, bawah) karena jantung menempati ruang di rongga dada sebelah kiri. Pilihan lain salah dalam jumlah lobus atau posisi jantung.',
-    hint: 'Letakkan tangan di dada — di sebelah mana jantungmu?',
-    source: 'Buku Biologi SMA — anatomi paru-paru',
+      'Benar! Hukum Boyle: P × V = konstan. Saat volume rongga dada membesar (diafragma turun, rusuk naik), tekanan intrapulmoner turun di bawah tekanan atmosfer, sehingga udara masuk. Pilihan lain salah karena mencampuradukkan arah perubahan tekanan atau menganggap ada "penghisap".',
+    hint: 'Coba ingat rumus P₁·V₁ = P₂·V₂ — bila V naik, P turun.',
+    source: 'Fisika SMA — Hukum Boyle (gas ideal suhu tetap)',
   },
+  // M2 Simulator Diafragma → mekanisme-naoas
   {
-    id: 'quiz-pH',
-    conceptId: 'pengaturan-naoas',
-    level: 'sma',
-    type: 'mcq',
-    prompt:
-      'Apa hubungan antara ventilasi paru dan keseimbangan asam-basa (pH) darah?',
-    options: [
-      {
-        id: 'a',
-        text: 'Napass cepat menurunkan CO₂ darah → pH menurun (asam).',
-      },
-      {
-        id: 'b',
-        text: 'Napass lambat menaikkan O₂ → pH naik drastis jadi basa.',
-      },
-      {
-        id: 'c',
-        text: 'Ventilasi mengatur CO₂; CO₂ berkorelasi dengan asam karbonat, sehingga memengaruhi pH darah.',
-      },
-      {
-        id: 'd',
-        text: 'Paru-paru tidak berperan dalam keseimbangan pH — hanya ginjal yang mengatur.',
-      },
-    ],
-    answer: 'c',
-    explanation:
-      'Tepat! Sistem buffer bikarbonat: CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻. Ventilasi yang meningkat mengeluarkan CO₂ → pH naik (alkalosis respiratorik). Ginjal juga terlibat, tapi paru mengatur dengan cepat. Pilihan lain salah dalam arah perubahan pH atau mengabaikan peran paru.',
-    hint: 'CO₂ larut dalam darah membentuk asam karbonat — seberapa kuat?',
-    source: 'Fisiologi SMA — pengaturan asam-basa oleh paru dan ginjal',
-  },
-  {
-    id: 'quiz-asma',
-    conceptId: 'ganguan-pernapasan',
-    level: 'sma',
-    type: 'mcq',
-    prompt:
-      'Mengapa asma menyebabkan sesak napas terutama saat ekspirasi?',
-    options: [
-      {
-        id: 'a',
-        text: 'Otot polos bronkiolus berkontraksi → resistansi aliran naik, udara sulit keluar.',
-      },
-      {
-        id: 'b',
-        text: 'Alveolus pecah karena tekanan inspirasi terlalu tinggi.',
-      },
-      {
-        id: 'c',
-        text: 'Diafragma lumpuh sehingga tidak bisa turun.',
-      },
-      {
-        id: 'd',
-        text: 'Epiglotis menutup permanen saat serangan asma.',
-      },
-    ],
-    answer: 'a',
-    explanation:
-      'Benar! Serangan asma: bronkiolus menyempit karena spasme otot polos + inflasi + lendir. Resistansi aliran naik tajam (bersifat eksponensial terhadap penyempitan), sehingga udara sulit keluar (ekspirasi prolonged). Pilihan b–d menggambarkan kondisi yang tidak sesuai patofisiologi asma.',
-    hint: 'Bayangkan pipa air yang dipipihkan — air susah keluar, bukan susah masuk.',
-    source: 'WHO — asma: definisi dan patogenesisi',
-  },
-  {
-    id: 'quiz-altitude',
-    conceptId: 'altitude-dosis',
-    level: 'sma',
-    type: 'mcq',
-    prompt:
-      'Apa yang terjadi pada saturasi O₂ darah saat mendaki gunung tinggi?',
-    options: [
-      {
-        id: 'a',
-        text: 'Tekanan parsial O₂ turun karena tekanan atmosfer turun, saturasi menurun.',
-      },
-      {
-        id: 'b',
-        text: 'Tekanan parsial O₂ naik, paru bekerja lebih efisien di ketinggian.',
-      },
-      {
-        id: 'c',
-        text: 'Hemoglobin berkurang jumlahnya sehingga O₂ tidak terserap.',
-      },
-      {
-        id: 'd',
-        text: 'Udara di gunung lebih murni O₂-nya daripada di dataran rendah.',
-      },
-    ],
-    answer: 'a',
-    explanation:
-      'Tepat! Pressure total udara turun seiring ketinggian → tekanan parsial O₂ turun (pO₂ = fraksi × P_total) → gradien difusi alveolus–darah mengecil → saturasi hemoglobin turun (kurva disosiasi). Tubuh beraklimatisasi dengan meningkatkan produksi eritrosit, tapi saturasi tetap lebih rendah. Pilihan b, c, d bertentangan dengan hukum Dalton dan fisiologi ketinggian.',
-    hint: 'Fraksi O₂ tetap 21%, tapi tekanan total turun — bagaimana dampaknya?',
-    source: 'Fisiologi olahraga & kedokteran gunung — hipoksia ketinggian',
-  },
-  {
-    id: 'quiz-tidal',
-    conceptId: 'volume-paru',
-    level: 'sma',
-    type: 'mcq',
-    prompt:
-      'Volume tidal (TV) paling tepat didefinisikan sebagai…',
-    options: [
-      {
-        id: 'a',
-        text: 'Volume terbesar yang bisa dihembuskan setelah inspirasi maksimal.',
-      },
-      {
-        id: 'b',
-        text: 'Volume udara yang masuk-keluar paru pada napas biasa dalam keadaan istirahat.',
-      },
-      {
-        id: 'c',
-        text: 'Volume udara yang masih tersisa di paru setelah ekspirasi maksimal.',
-      },
-      {
-        id: 'd',
-        text: 'Jumlah semua kapasitas paru (total kapasitas paru).',
-      },
-    ],
-    answer: 'b',
-    explanation:
-      'Benar! TV ≈ 500 mL pada dewasa istirahat — udara napas biasa. Pilihan a = kapasitas vital (VC), c = volume residu (RV), d = kapasitas paru total (TLC). Jangan tertukar: TV adalah "napas sehari-hari", bukan napas maximum.',
-    hint: 'Think: "tidal" = pasang-surut — volume kecil yang berulang.',
-    source: 'Buku Fisiologi — spirometri dan volume paru',
-  },
-  {
-    id: 'quiz-proteksi',
-    conceptId: 'profilaksis-pernapasan',
-    level: 'sd',
-    type: 'mcq',
-    prompt:
-      'Cara manakah yang paling efektif melindungi paru-paru dari polusi udara?',
-    options: [
-      {
-        id: 'a',
-        text: 'Mengurangi aktivitas fisik di luar ruangan saat indeks kualitas udara buruk.',
-      },
-      {
-        id: 'b',
-        text: 'Minum banyak air dingin agar paru tidak panas.',
-      },
-      {
-        id: 'c',
-        text: 'Bernapas lewat mulut saat berada di area berasap.',
-      },
-      {
-        id: 'd',
-        text: 'Memakai parfum beraroma kuat untuk menutupi bau asap.',
-      },
-    ],
-    answer: 'a',
-    explanation:
-      'Benar! Mengurangi paparan adalah langkah pertama perlindungan (hierarchy of controls). Memakai masker N95/KN95 saat harus keluar juga efektif. Pilihan b, c, d tidak melindungi paru — bernapas lewat mulut justru menghindari penyaringan hidung.',
-    hint: 'Langkah paling dasar dalam keselamatan: jangan terpapar, jika bisa dihindari.',
-    source: 'Kemenkes RI — panduan kualitas udara dan kesehatan pernapasan',
-  },
-  {
-    id: 'quiz-influenza',
-    conceptId: 'ganguan-pernapasan',
-    level: 'sd',
-    type: 'mcq',
-    prompt:
-      'Penyakit pernapasan menular yang paling umum disebabkan oleh…',
-    options: [
-      {
-        id: 'a',
-        text: 'Virus influenza dan virus pernapasan lainnya.',
-      },
-      {
-        id: 'b',
-        text: 'Makan terlalu pedas.',
-      },
-      {
-        id: 'c',
-        text: 'Otot diafragma yang terlalu kencang.',
-      },
-      {
-        id: 'd',
-        text: 'Kelebihan oksigen di udara.',
-      },
-    ],
-    answer: 'a',
-    explanation:
-      'Benar! Influenza, RSV, dan SARS-CoV-2 adalah contoh virus pernapasan yang menular lewat droplet/aerosol. Pencegahan: cuci tangan, vaksinasi, masker saat sakit. Pilihan lain tidak menyebabkan penyakit menular.',
-    hint: 'Penyakit menular selalu punya agen infeksi — apa penyebab utamanya?',
-    source: 'Kemenkes RI — informasi influenza dan ISPA',
-  },
-  {
-    id: 'quiz-permukaan',
-    conceptId: 'difusi-alveolus',
-    level: 'sma',
-    type: 'mcq',
-    prompt:
-      'Mengapa paru-paru manusia memiliki jutaan alveolus bukan satu kantong besar?',
-    options: [
-      {
-        id: 'a',
-        text: 'Untuk memperluas luas permukaan pertukaran gas sehingga difusi cukup cepat.',
-      },
-      {
-        id: 'b',
-        text: 'Supaya paru bisa membesar tanpa batas saat inspirasi.',
-      },
-      {
-        id: 'c',
-        text: 'Agar darah tidak bercampur dengan udara langsung.',
-      },
-      {
-        id: 'd',
-        text: 'Karena evolusi menyukai bentuk bulat kecil.',
-      },
-    ],
-    answer: 'a',
-    explanation:
-      'Benar! Luas permukaan alveolus total ≈ 70 m² — seukuran lapangan tenis kecil. Hukum Fick: laju difusi sebanding luas permukaan. Satu kantong besar akan mempunyai luas permukaan jauh lebih kecil untuk volume yang sama. Pilihan b–d tidak menjelaskan alasan fisiologis.',
-    hint: 'Semakin banyak lipatan, semakin besar luas permukaan — seperti usus.',
-    source: 'Buku Biologi SMA — struktur alveolus dan Hukum Fick',
-  },
-  {
-    id: 'quiz-diafragma-top',
+    id: 'quiz-mekanisme-naoas',
     conceptId: 'mekanisme-naoas',
     level: 'sd',
     type: 'mcq',
-    prompt:
-      'Otot utama yang membantu kita bernapas adalah…',
+    prompt: 'Otot utama yang membantu kita bernapas adalah…',
     options: [
-      {
-        id: 'a',
-        text: 'Diafragma, otot berbentuk kubah di bawah paru-paru.',
-      },
-      {
-        id: 'b',
-        text: 'Otot lengan yang membantu menarik napas dalam.',
-      },
-      {
-        id: 'c',
-        text: 'Otot perut saja yang mendorong udara keluar.',
-      },
-      {
-        id: 'd',
-        text: 'Jantung yang memompa udara masuk-keluar.',
-      },
+      { id: 'a', text: 'Diafragma, otot berbentuk kubah di bawah paru-paru' },
+      { id: 'b', text: 'Otot lengan yang membantu menarik napas dalam' },
+      { id: 'c', text: 'Otot perut saja yang mendorong udara keluar' },
+      { id: 'd', text: 'Jantung yang memompa udara masuk-keluar' },
     ],
     answer: 'a',
     explanation:
       'Benar! Diafragma adalah otot pernapasan utama. Saat berkontraksi, diafragma turun → volume rongga dada ↑ → tekanan ↓ → udara masuk. Otot bantu (antartulang rusuk, perut) hanya menyokong pada napas dalam atau batuk. Pilihan b, c, d salah secara anatomi.',
     hint: 'Letakkan tangan di perut, tarik napas dalam — apa yang kamu rasakan?',
     source: 'Buku IPA SD–SMP — sistem pernapasan manusia',
-  },
-  {
-    id: 'quiz-kapasitas',
-    conceptId: 'volume-paru',
-    level: 'smp',
-    type: 'mcq',
-    prompt:
-      'Kapasitas vital (VC) adalah jumlah volume terbesar yang…',
-    options: [
-      {
-        id: 'a',
-        text: 'Dihembuskan setelah menarik napas sedalam-dalamnya.',
-      },
-      {
-        id: 'b',
-        text: 'Masuk ke paru saat napas biasa.',
-      },
-      {
-        id: 'c',
-        text: 'Tetap tersisa di paru setelah napas habis.',
-      },
-      {
-        id: 'd',
-        text: 'Dihasilkan paru-paru tiap menit saat istirahat.',
-      },
-    ],
-    answer: 'a',
-    explanation:
-      'Benar! VC = TV + IRV + ERV (≈ 4600 mL pada dewasa). Volume residu (c) tidak masuk VC. Ventilasi per menit (d) = TV × frekuensi napas. Pilihan b hanya TV. Ingat rumus: VC adalah "keseluruhan yang bisa dikeluarkan setelah menarik maksimal".',
-    hint: 'Vital = hayat — volume terpenting yang bisa dikeluarkan.',
-    source: 'Buku Biologi SMA — spirometri dan volume paru',
   },
 ]
