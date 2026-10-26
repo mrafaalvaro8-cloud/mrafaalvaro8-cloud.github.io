@@ -9,12 +9,12 @@ jobs:
   verifikasi:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
+      - run: npm ci --prefer-offline || npm install
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run test
