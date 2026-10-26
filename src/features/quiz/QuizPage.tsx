@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { id } from '../../content/i18n/id'
 import { questions } from '../../content/quiz'
 import { useProgressStore } from '../../app/stores'
@@ -9,7 +9,7 @@ import { useProgressStore } from '../../app/stores'
  * Jawaban dan skor tersimpan lokal lewat IndexedDB (tanpa akun, §9).
  */
 
-type QuizState = 'ringkasan' | 'soal' | 'selesai'
+type QuizState = 'ringkasan' | 'soal'
 
 export function QuizPage() {
   const t = id.quiz
@@ -51,11 +51,7 @@ export function QuizPage() {
     setState('ringkasan')
   }
 
-  useEffect(() => {
-    if (isAllDone) setState('selesai')
-  }, [isAllDone])
-
-  if (state === 'selesai') {
+  if (isAllDone) {
     return (
       <section aria-labelledby="judul-kuis" className="w-full max-w-2xl">
         <h2
