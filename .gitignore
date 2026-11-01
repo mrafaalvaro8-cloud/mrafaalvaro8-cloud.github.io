@@ -7,3 +7,5 @@ coverage
 *.log
 .claude/
 graphify-out/
+# Ekspor config lokal yang berisi token — jangan pernah di-commit
+opencode.json.txt
