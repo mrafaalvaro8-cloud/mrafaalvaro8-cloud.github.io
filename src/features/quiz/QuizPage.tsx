@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { id } from '../../content/i18n/id'
 import { questions } from '../../content/quiz'
 import { useProgressStore } from '../../app/stores'
+import { QuestionFeedback } from '../../components/QuestionFeedback'
+import { QuestionOptions } from '../../components/QuestionOptions'
 
 /**
  * M8 — Kuis adaptif. Menampilkan ringkasan penguasaan per topik,
@@ -10,6 +12,15 @@ import { useProgressStore } from '../../app/stores'
  */
 
 type QuizState = 'ringkasan' | 'soal'
+
+/** Label topik dari conceptId: 'difusi-alveolus' → 'Difusi Alveolus'. */
+function conceptLabel(conceptId: string): string {
+  return conceptId
+    .replace(/-co2$/, '-CO₂')
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
 
 export function QuizPage() {
   const t = id.quiz
@@ -34,8 +45,11 @@ export function QuizPage() {
 
   const question = sorted[idx]
   const answered = question ? question.id in answers : false
-  const correct = choice === question?.answer
-  const showHint = !answered && choice !== null && choice !== question?.answer && question?.hint
+  const showHint =
+    !answered &&
+    choice !== null &&
+    choice !== question?.answer &&
+    Boolean(question?.hint)
   const isAllDone = idx >= sorted.length
 
   const nextQuestion = () => {
@@ -49,6 +63,19 @@ export function QuizPage() {
     setChoice(null)
     setIdx(0)
     setState('ringkasan')
+  }
+
+  const pick = (optionId: string) => {
+    if (!question) return
+    setChoice(optionId)
+    if (!answers[question.id]) {
+      recordAnswer(
+        question.id,
+        optionId,
+        question.conceptId,
+        optionId === question.answer,
+      )
+    }
   }
 
   if (isAllDone) {
@@ -96,15 +123,10 @@ export function QuizPage() {
         <dl className="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
           {Array.from(new Set(questions.map((q) => q.conceptId))).map((conceptId) => {
             const m = mastery[conceptId] ?? 0
-            const label = conceptId
-              .replace(/-co2$/, '-CO₂')
-              .split('-')
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join(' ')
             return (
               <div key={conceptId} className="rounded-lg border border-white/10 bg-white/5 p-3">
                 <dt className="text-xs font-medium" style={{ color: 'var(--ink-dim)' }}>
-                  {label}
+                  {conceptLabel(conceptId)}
                 </dt>
                 <dd className="mt-1 flex items-center gap-2">
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/10">
@@ -158,95 +180,33 @@ export function QuizPage() {
         <div className="rounded-xl border border-white/10 bg-white/5 p-4">
           <p className="mb-3 text-sm font-medium">{question.prompt}</p>
 
-          <ul className="flex flex-col gap-2" role="group" aria-label={id.journey.cek.pilihan}>
-            {question.options?.map((option, optIdx) => {
-              const picked = choice === option.id
-              const isAnswer = option.id === question.answer
-              const done = question.id in answers
-              const state2 = done
-                ? picked
-                  ? isAnswer
-                    ? 'right'
-                    : 'wrong'
-                  : isAnswer
-                    ? 'reveal'
-                    : 'dim'
-                : picked
-                  ? 'picked'
-                  : 'idle'
-              return (
-                <li key={option.id}>
-                  <button
-                    type="button"
-                    disabled={done}
-                    onClick={() => {
-                      if (done) return
-                      setChoice(option.id)
-                      const correct2 = option.id === question.answer
-                      if (!answers[question.id]) {
-                        recordAnswer(question.id, option.id, question.conceptId, correct2)
-                      }
-                    }}
-                    aria-pressed={picked}
-                    data-testid={`quiz-option-${optIdx}`}
-                    className="min-h-11 w-full rounded-lg border px-3 py-2 text-left text-sm disabled:cursor-default"
-                    style={{
-                      borderColor:
-                        state2 === 'right'
-                          ? 'var(--mucus)'
-                          : state2 === 'wrong'
-                            ? 'var(--tissue)'
-                            : state2 === 'reveal'
-                              ? 'var(--oxygen)'
-                              : 'rgba(255,255,255,0.2)',
-                      color:
-                        state2 === 'right'
-                          ? 'var(--mucus)'
-                          : state2 === 'wrong'
-                            ? 'var(--tissue)'
-                            : state2 === 'reveal'
-                              ? 'var(--oxygen)'
-                              : state2 === 'picked'
-                                ? 'var(--ink)'
-                                : 'var(--ink)',
-                    }}
-                  >
-                    {option.text}
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
+          <QuestionOptions
+            question={question}
+            choice={choice}
+            answered={answered}
+            onPick={pick}
+            testIdPrefix="quiz-option"
+          />
 
           {choice !== null && (
-            <div className="mt-3 space-y-2">
-              <p
-                className="text-sm font-semibold"
-                style={{ color: correct ? 'var(--mucus)' : 'var(--tissue)' }}
-                role="status"
-              >
-                {correct ? id.journey.cek.benar : id.journey.cek.salah}
-              </p>
-              {showHint && (
-                <p className="text-xs" style={{ color: 'var(--ink-dim)' }}>
-                  {id.journey.cek.hint}: {question.hint}
-                </p>
-              )}
-              <div>
-                <p className="text-xs font-semibold" style={{ color: 'var(--ink-dim)' }}>
-                  {id.journey.cek.penjelasan}
-                </p>
-                <p className="text-sm leading-relaxed">{question.explanation}</p>
-              </div>
+            <QuestionFeedback
+              question={question}
+              choice={choice}
+              showHint={showHint}
+            >
               <button
                 type="button"
                 onClick={nextQuestion}
                 className="mt-2 min-h-11 rounded-lg border px-4 text-sm font-semibold"
-                style={{ borderColor: 'var(--oxygen)', color: 'var(--bg-deep)', background: 'var(--oxygen)' }}
+                style={{
+                  borderColor: 'var(--oxygen)',
+                  color: 'var(--bg-deep)',
+                  background: 'var(--oxygen)',
+                }}
               >
                 {idx < sorted.length - 1 ? t.nextLabel : t.selesai}
               </button>
-            </div>
+            </QuestionFeedback>
           )}
         </div>
       )}
@@ -257,7 +217,7 @@ export function QuizPage() {
         className="mt-3 text-xs"
         style={{ color: 'var(--ink-dim)' }}
       >
-        Kembali ke ringkasan
+        {t.kembali}
       </button>
     </section>
   )

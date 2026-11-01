@@ -70,7 +70,7 @@ export function HemoglobinCar() {
       <svg
         viewBox="0 0 260 130"
         role="img"
-        aria-label={`${t.slot}: ${filled} ${filled === 1 ? 'ikatan' : 'ikatan'} terisi`}
+        aria-label={`${t.slot}: ${filled} ${t.slotTerisi}`}
         className="w-full"
       >
         <title>{t.slot}</title>

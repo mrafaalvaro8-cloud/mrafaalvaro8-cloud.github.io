@@ -109,8 +109,8 @@ export function DiffusionLab() {
             />
           ),
         )}
-        <text x="34" y="136" fontSize="10" fill="var(--oxygen)">Alveolus (O₂ tinggi)</text>
-        <text x="188" y="136" fontSize="10" fill="var(--tissue)">Kapiler darah</text>
+        <text x="34" y="136" fontSize="10" fill="var(--oxygen)">{t.labelAlveolus}</text>
+        <text x="188" y="136" fontSize="10" fill="var(--tissue)">{t.labelKapiler}</text>
       </svg>
 
       <label htmlFor="tebal-dinding" className="mt-2 block text-sm">

@@ -16,7 +16,7 @@ darah merah, sambil menggeser dan menekan setiap bagian yang dipelajari.
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![Tailwind](https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white)
 ![PWA](https://img.shields.io/badge/PWA-offline--ready-5A0FC8?logo=pwa&logoColor=white)
-![Tes](https://img.shields.io/badge/tes-41_lolos-7CE0A5)
+![Tes](https://img.shields.io/badge/tes-40_lolos-7CE0A5)
 
 </div>
 
@@ -89,13 +89,20 @@ Ada suara suasana napas dan detak jantung, termasuk suara slider pita suara yang
 makin keras kalau slidersnya makin jauh digeser. Tersedia juga tombol Kurangi
 gerak.
 
+**M8. Kuis adaptif**
+
+Kuis memilih soal dari konsep yang penguasaannya paling rendah, lalu mencatat
+setiap jawaban di perangkat. Ringkasan penguasaan per topik ditampilkan sebelum
+mulai, dan setiap jawaban disertai penjelasan. Tidak ada "game over": murid
+selalu bisa mengulang.
+
 ### Rencana selanjutnya
 
 | Fase | Isi | Status |
 | :---: | --- | --- |
 | 0 | Fondasi proyek, desain, i18n, PWA, CI | Selesai |
-| 1 | M1 perjalanan napas, M2 diafragma, skenario kabut asap | Sedang dikerjakan |
-| 2 | Spirometer, skenario lain, kuis adaptif, simpan progres | Belum |
+| 1 | M1 perjalanan napas, M2 diafragma | Selesai |
+| 2 | Spirometer dan skenario lain (kuis adaptif & simpan progres sudah selesai) | Sebagian |
 | 3 | Model 3D, audio, transisi, mikrofon, getaran | Belum |
 | 4 | Gamifikasi: detektif, tower defense, puzzle, lencana | Belum |
 | 5 | Lab virtual, perbandingan hewan, asisten AI, dashboard guru | Belum |
@@ -150,9 +157,10 @@ src/
   features/     satu fitur satu folder, dimuat saat dibutuhkan
     journey/      M1 perjalanan napas
     diaphragm/    M2 simulator diafragma
+    quiz/         M8 kuis adaptif
   audio/        pengatur suara
   styles/       warna dan tampilan dasar
-  components/   komponen yang dipakai bersama
+  components/   komponen yang dipakai bersama (mis. pemilih tingkat, pilihan jawaban)
 
 tests/          pengujian komponen
 public/
@@ -203,7 +211,6 @@ tidak ditulis asal.
 
 - Hukum Boyle, yaitu `P1 x V1 = P2 x V2`. Tekanan selalu cocok dengan volume.
 - Laju difusi makin cepat kalau luas permukaannya besar dan dindingnya tipis.
-- Spirometer selalu memenuhi `VC = TV + IRV + ERV` dan `TLC = VC + RV`.
 - Nilai penguasaan naik 0,15 kali sisa menuju satu kalau benar, dan turun 0,2
   kali nilai sekarang kalau salah.
 

@@ -76,7 +76,7 @@ export function BranchPicker() {
           strokeWidth="2"
         />
         <text x="130" y="166" textAnchor="middle" fontSize="10" fill="var(--ink-dim)">
-          {side === 'kanan' ? `3 ${'lobus'}` : `2 ${'lobus'}`}
+          {`${side === 'kanan' ? 3 : 2} ${t.lobus}`}
         </text>
       </svg>
 

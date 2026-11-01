@@ -11,6 +11,7 @@ import {
   type BreathState,
 } from '../../engine/breathing'
 import { useSettingsStore } from '../../app/stores'
+import { LevelPicker } from '../../components/LevelPicker'
 import { ChestSvg } from './ChestSvg'
 import { DataPanel } from './DataPanel'
 import { pressureToY, volumeToX } from './plot'
@@ -30,7 +31,6 @@ export function DiaphragmSim() {
   // Tingkat penjelasan dibagikan (§3): murid yang sama di Perjalanan maupun
   // Simulator memilih satu — pilihan di satu fitur tercatat di yang lain.
   const level = useSettingsStore((s) => s.level)
-  const setLevel = useSettingsStore((s) => s.setLevel)
 
   const sliderRef = useRef<HTMLInputElement>(null)
   const targetRef = useRef(percentToVolume(REST_PERCENT))
@@ -272,34 +272,10 @@ export function DiaphragmSim() {
 
       {/* Tingkat penjelasan (§2) + penjelasan dari content/ (§4) */}
       <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-4">
-        <div
-          className="mb-3 flex flex-wrap items-center gap-2"
-          role="group"
-          aria-label={t.levelLabel}
-        >
-          <span className="text-sm font-semibold">{t.levelLabel}:</span>
-          {(['sd', 'smp', 'sma'] as const).map((lv) => (
-            <button
-              key={lv}
-              type="button"
-              aria-pressed={level === lv}
-              onClick={() => setLevel(lv)}
-              className={`min-h-11 rounded-full border px-4 text-sm ${
-                level === lv ? 'font-semibold' : ''
-              }`}
-              style={{
-                borderColor:
-                  level === lv ? 'var(--mucus)' : 'rgba(255,255,255,0.2)',
-                color: level === lv ? 'var(--mucus)' : 'var(--ink)',
-              }}
-            >
-              {t.levels[lv]}
-            </button>
-          ))}
-        </div>
+        <LevelPicker className="mb-3" />
         <p className="text-sm leading-relaxed">{diaphragmLesson[level]}</p>
         <p className="mt-2 text-xs" style={{ color: 'var(--ink-dim)' }}>
-          {t.sumber}: {diaphragmSource.join(' · ')}
+          {id.umum.sumber}: {diaphragmSource.join(' · ')}
         </p>
       </div>
 

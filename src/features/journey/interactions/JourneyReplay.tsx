@@ -76,7 +76,7 @@ export function JourneyReplay({ reduceMotion }: { reduceMotion: boolean }) {
 
       <p className="mt-2 text-sm" role="status" aria-live="polite">
         {t.langkah} {step + 1}/{STOPS.length}: <strong>{stations[step]?.title}</strong>
-        {returnMode ? ' — CO₂ kembali keluar lewat hidung' : ''}
+        {returnMode ? ` ${t.keteranganPulang}` : ''}
       </p>
 
       <button

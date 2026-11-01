@@ -45,10 +45,10 @@ export function TractMap({ active, reduceMotion }: TractMapProps) {
       />
       {/* Legenda warna tanpa mengandalkan warna saja: label teks */}
       <text x="130" y="548" textAnchor="middle" fontSize="11" fill="var(--oxygen)">
-        O₂ ↓ turun ke paru
+        {id.journey.nav.legendaTurun}
       </text>
       <text x="236" y="60" fontSize="11" fill="var(--co2)">
-        CO₂ ↑ keluar
+        {id.journey.nav.legendaKeluar}
       </text>
 
       {/* Perhentian stasiun */}

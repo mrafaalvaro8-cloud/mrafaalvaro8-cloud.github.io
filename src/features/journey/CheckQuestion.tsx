@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { id } from '../../content/i18n/id'
 import { useProgressStore } from '../../app/stores'
 import type { Question } from '../../engine/types'
+import { QuestionFeedback } from '../../components/QuestionFeedback'
+import { QuestionOptions } from '../../components/QuestionOptions'
 
 /**
  * Cek pemahaman per stasiun (KS M1 huruf c). MCQ: umpan balik + penjelasan
@@ -17,7 +19,6 @@ export function CheckQuestion({ question }: { question: Question }) {
 
   const answered = choice !== null
   const correct = answered && choice === question.answer
-  const showHint = answered && !correct && question.hint
 
   const answer = (optionId: string) => {
     if (answered) return
@@ -49,79 +50,19 @@ export function CheckQuestion({ question }: { question: Question }) {
       </h4>
       <p className="mb-3 text-sm font-medium">{question.prompt}</p>
 
-      <ul
-        className="flex flex-col gap-2"
-        role="group"
-        aria-label={t.pilihan}
-      >
-        {question.options?.map((option) => {
-          const picked = choice === option.id
-          const isAnswer = option.id === question.answer
-          const state = !answered
-            ? 'idle'
-            : picked
-              ? isAnswer
-                ? 'right'
-                : 'wrong'
-              : isAnswer
-                ? 'reveal'
-                : 'dim'
-          return (
-            <li key={option.id}>
-              <button
-                type="button"
-                disabled={answered}
-                onClick={() => answer(option.id)}
-                aria-pressed={picked}
-                className="min-h-11 w-full rounded-lg border px-3 py-2 text-left text-sm disabled:cursor-default"
-                style={{
-                  borderColor:
-                    state === 'right'
-                      ? 'var(--mucus)'
-                      : state === 'wrong'
-                        ? 'var(--tissue)'
-                        : state === 'reveal'
-                          ? 'var(--oxygen)'
-                          : 'rgba(255,255,255,0.2)',
-                  color:
-                    state === 'right'
-                      ? 'var(--mucus)'
-                      : state === 'wrong'
-                        ? 'var(--tissue)'
-                        : state === 'reveal'
-                          ? 'var(--oxygen)'
-                          : state === 'dim'
-                            ? 'var(--ink-dim)'
-                            : 'var(--ink)',
-                }}
-              >
-                {option.text}
-              </button>
-            </li>
-          )
-        })}
-      </ul>
+      <QuestionOptions
+        question={question}
+        choice={choice}
+        answered={answered}
+        onPick={answer}
+      />
 
-      {answered && (
-        <div className="mt-3 space-y-2">
-          <p
-            className="text-sm font-semibold"
-            style={{ color: correct ? 'var(--mucus)' : 'var(--tissue)' }}
-            role="status"
-          >
-            {correct ? t.benar : t.salah}
-          </p>
-          {showHint && (
-            <p className="text-xs" style={{ color: 'var(--ink-dim)' }}>
-              {t.hint}: {question.hint}
-            </p>
-          )}
-          <div>
-            <p className="text-xs font-semibold" style={{ color: 'var(--ink-dim)' }}>
-              {t.penjelasan}
-            </p>
-            <p className="text-sm leading-relaxed">{question.explanation}</p>
-          </div>
+      {answered && choice !== null && (
+        <QuestionFeedback
+          question={question}
+          choice={choice}
+          showHint={!correct && Boolean(question.hint)}
+        >
           <p className="text-xs" style={{ color: 'var(--ink-dim)' }}>
             {t.tercatat}
           </p>
@@ -135,7 +76,7 @@ export function CheckQuestion({ question }: { question: Question }) {
               {t.ulangi}
             </button>
           )}
-        </div>
+        </QuestionFeedback>
       )}
     </section>
   )

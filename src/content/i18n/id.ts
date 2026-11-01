@@ -36,6 +36,8 @@ export const id = {
       dariTotal: 'dari',
       daftarStasiun: 'Daftar stasiun',
       posisiAktif: 'Stasiun aktif',
+      legendaTurun: 'O₂ ↓ turun ke paru',
+      legendaKeluar: 'CO₂ ↑ keluar',
     },
     ambience: {
       nyalakan: 'Putar suasana napas',
@@ -99,6 +101,7 @@ export const id = {
         infoKiri:
           'Bronkus kiri lebih ramping dan mendatar. Paru kiri punya 2 lobus — ruang untuk jantung.',
         jumlahLobus: 'Jumlah lobus',
+        lobus: 'lobus',
       },
       diffusion: {
         judul: 'Uji kecepatan difusi',
@@ -110,6 +113,8 @@ export const id = {
           'Dinding sangat tipis — difusi cepat. Inilah kondisi alveolus sehat.',
         catatanTebal:
           'Dinding menebal — difusi melambat dan O₂ sulit masuk darah.',
+        labelAlveolus: 'Alveolus (O₂ tinggi)',
+        labelKapiler: 'Kapiler darah',
       },
       hemoglobin: {
         judul: 'Muat dan lepas di perjalanan darah',
@@ -121,6 +126,7 @@ export const id = {
         statusJaringan:
           'O₂ dilepas ke sel tubuh; hemoglobin membawa CO₂ (kuning) kembali ke paru.',
         slot: 'Ikatan hemoglobin',
+        slotTerisi: 'ikatan terisi',
       },
       summary: {
         judul: 'Ringkasan jalur',
@@ -129,6 +135,7 @@ export const id = {
         putar: 'Putar perjalanan',
         hentikan: 'Hentikan putaran',
         langkah: 'Langkah',
+        keteranganPulang: '— CO₂ kembali keluar lewat hidung',
       },
     },
   },
@@ -146,7 +153,6 @@ export const id = {
       volume: 'Volume rongga dada (relatif)',
       tekanan: 'Tekanan intrapulmoner (relatif terhadap atmosfer)',
       aliran: 'Arah aliran udara',
-      catatan: 'Model sederhana untuk belajar',
     },
     tekananStatus: {
       bawah: 'di bawah atmosfer',
@@ -163,8 +169,6 @@ export const id = {
       perut: 'Pernapasan perut (diafragma)',
       dada: 'Pernapasan dada (otot antartulang rusuk)',
     },
-    levelLabel: 'Tingkat penjelasan',
-    levels: { sd: 'SD', smp: 'SMP', sma: 'SMA' },
     grafik: {
       judul: 'Grafik P × V (mode SMA)',
       x: 'Volume (relatif)',
@@ -174,26 +178,17 @@ export const id = {
     diagram: {
       aria:
         'Diagram rongga dada: trakea, paru, tulang rusuk, dan diafragma. Angka pastinya ada di panel data.',
-      legendaO2: 'O₂ (udara masuk)',
-      legendaCo2: 'CO₂ (udara keluar)',
     },
-    pelajaranLabel: 'Penjelasan',
-    sumber: 'Sumber',
   },
-  scenarios: {},
   quiz: {
     judul: 'Kuis Adaptif',
     petunjuk:
       'Kerjakan soal berdasarkan konsep yang paling sering kamu salah. Setiap jawaban memperbarui penguasaanmu secara lokal di perangkat.',
     ringkasan: 'Penguasaan per topik',
-    belum: 'Belum dijawab',
-    sudah: 'Sudah dijawab',
-    lanjut: 'Lanjut ke soal berikutnya',
     ulangSemua: 'Ulang semua soal',
     selesai: 'Semua soal sudah dijawab — selamat!',
-    skor: 'Skor rata-rata',
-    konsep: 'Konsep',
     nextLabel: 'Soal berikutnya',
     jalan: 'Mulai kuis',
+    kembali: 'Kembali ke ringkasan',
   },
 } as const

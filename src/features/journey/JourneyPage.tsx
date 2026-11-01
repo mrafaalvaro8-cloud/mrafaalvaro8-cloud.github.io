@@ -8,6 +8,7 @@ import { createAmbience, isAudioSupported } from '../../audio/ambience'
 import type { AmbienceController } from '../../audio/ambience'
 import { StationSection } from './StationSection'
 import { TractMap } from './TractMap'
+import { LevelPicker } from '../../components/LevelPicker'
 
 /**
  * M1 — Scrollytelling "Perjalanan Satu Tarikan Napas" (versi 2D).
@@ -19,7 +20,6 @@ import { TractMap } from './TractMap'
 export function JourneyPage() {
   const t = id.journey
   const level = useSettingsStore((s) => s.level)
-  const setLevel = useSettingsStore((s) => s.setLevel)
   const reduceMotion = useSettingsStore((s) => s.reduceMotion)
   const setReduceMotion = useSettingsStore((s) => s.setReduceMotion)
 
@@ -100,25 +100,7 @@ export function JourneyPage() {
 
       {/* Kontrol halaman: tingkat, gerak, suasana */}
       <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-        <div role="group" aria-label={id.umum.levelLabel} className="flex items-center gap-2">
-          <span className="text-sm font-semibold">{id.umum.levelLabel}:</span>
-          {(['sd', 'smp', 'sma'] as const).map((lv) => (
-            <button
-              key={lv}
-              type="button"
-              aria-pressed={level === lv}
-              onClick={() => setLevel(lv)}
-              className="min-h-11 rounded-full border px-4 text-sm"
-              style={{
-                borderColor: level === lv ? 'var(--mucus)' : 'rgba(255,255,255,0.2)',
-                color: level === lv ? 'var(--mucus)' : 'var(--ink)',
-                fontWeight: level === lv ? 600 : 400,
-              }}
-            >
-              {id.umum.levels[lv]}
-            </button>
-          ))}
-        </div>
+        <LevelPicker />
 
         <button
           type="button"

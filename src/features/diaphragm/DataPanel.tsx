@@ -50,7 +50,7 @@ export function DataPanel(props: DataPanelProps) {
         </div>
       </dl>
       <p className="mt-3 text-xs" style={{ color: 'var(--ink-dim)' }}>
-        {t.panel.catatan}
+        {id.umum.modelCatatan}
       </p>
     </aside>
   )
